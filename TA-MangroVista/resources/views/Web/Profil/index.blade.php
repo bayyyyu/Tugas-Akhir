@@ -544,7 +544,7 @@
 
                             <!-- Konten untuk tab Peran -->
                             <div class="tab-content-item" id="peran-content" style="display:none;">
-                               
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
@@ -582,14 +582,16 @@
                                                                 </div>
                                                             </div>
                                                             <div class="text">
-
                                                                 <p
                                                                     style="text-align: center; justify-content:center; font-weight:bolder;">
-                                                                    <span> Data Pengajuan Pengambilan Peran <a
-                                                                            href="" class="btn btn-sm"
-                                                                            style="display: inline-block"><i
-                                                                                class="icofont-edit"></i></a> </span>
-
+                                                                    <span> Data Pengajuan Pengambilan Peran @if ($role_request->jumlah_edit < 1)
+                                                                            <a href="{{ url('Ambil-Peran', $role_request->id) }}/edit"
+                                                                                class="btn btn-sm"
+                                                                                style="display: inline-block">
+                                                                                <i class="icofont-edit"></i>
+                                                                            </a>
+                                                                        @endif
+                                                                    </span>
                                                                 </p>
                                                                 <hr style="margin-top: -20px">
                                                                 <div class="row">
@@ -614,7 +616,8 @@
                                                                             <div class="col-md-6">
                                                                                 <span class="label-peran">Ambil Peran
                                                                                     Sebagai</span>
-                                                                                <p>{{ $role_request->request_role }}</p>
+                                                                                <p>{{ $role_request->request_role }}
+                                                                                </p>
                                                                             </div>
                                                                         </div>
                                                                         <hr style="margin-top: -15px">
@@ -668,8 +671,11 @@
                                                         style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                                                         <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
                                                             style="width: 100px; height: 100px;" class="mb-3">
-                                                        <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan peran.</p>
-                                                        <a href="{{url('Ambil-Peran')}}" class="btn btn-md button-transform button-border" style="color: white; font-size:15px" >Ajukan Sekarang</a>
+                                                        <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan peran.
+                                                        </p>
+                                                        <a href="{{ url('Ambil-Peran/create') }}"
+                                                            class="btn btn-md button-transform button-border"
+                                                            style="color: white; font-size:15px">Ajukan Sekarang</a>
                                                     </div>
                                                 </div>
 

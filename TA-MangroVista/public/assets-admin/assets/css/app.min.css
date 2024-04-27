@@ -76,14 +76,14 @@
     transition: all 0.3s ease-out;
     font-weight: 400;
 }
-.left-sidenav-menu li > a .menu-icon {
+/* .left-sidenav-menu li > a .menu-icon {
     width: 18px;
     height: 18px;
     color: #7081b9;
     fill: rgba(112, 129, 185, 0.12);
     margin-right: 6px;
     stroke-width: 1px;
-}
+} */
 .left-sidenav-menu li > a.active .menu-icon {
     color: #1761fd;
     fill: rgba(23, 97, 253, 0.12);

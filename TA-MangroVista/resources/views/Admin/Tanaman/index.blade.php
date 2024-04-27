@@ -56,7 +56,7 @@
                                             id="statusPenanaman_{{ $tanaman->id }}"
                                             data-original-value="{{ $tanaman->status_penanaman }}">{{ $tanaman->status_penanaman }}</span>
                                         <a onclick="editStatusPenanaman({{ $tanaman->id }})"><i
-                                                class="feather icon-edit" style="float: right; margin-top:8px"></i></a>
+                                                class="fa fa-edit" style="float: right; margin-top:8px"></i></a>
                                     </td>
                                     <td><a href="{{ url('Admin/Tanaman', $tanaman->id) }}"><img
                                                 src="{{ asset($tanaman->foto) }}" alt=""
@@ -108,7 +108,7 @@
             editLink.onclick = function() {
                 editStatusPenanaman(tanamanId);
             };
-            editLink.innerHTML = '<i class="feather icon-edit" style="float: right; margin-top:8px"></i>';
+            editLink.innerHTML = '<i class="fa fa-edit" style="float: right; margin-top:8px"></i>';
 
             // Hapus tombol Simpan dan Batal
             var btnSave = spanStatusPenanaman.nextSibling;

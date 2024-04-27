@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Notifikasi;
 use App\Models\Tanaman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class DashboardController extends Controller
 {
     function index()
     {
+        
         $tanaman = Tanaman::count();
         $event = Event::count();
 
@@ -27,6 +29,6 @@ class DashboardController extends Controller
         $totalPohonBaru = Tanaman::where('status_penanaman', 'baru ditanam')->count();
 
 
-        return view('Admin.Dashboard.index', compact('tanaman','event', 'totalEventSelesai', 'totalEventBelumSelesai', 'totalEventBerlangsung','totalPohonHidup','totalPohonMati', 'totalPohonBaru'));
+        return view('Admin.Dashboard.index', compact('tanaman','event', 'totalEventSelesai', 'totalEventBelumSelesai', 'totalEventBerlangsung','totalPohonHidup','totalPohonMati','totalPohonBaru'));
     }
 }

@@ -5,16 +5,18 @@ namespace App\Http\Controllers\WebControllers;
 use App\Http\Controllers\Controller;
 use App\Models\RoleRequest;
 use App\Models\User;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class RoleRequestController extends Controller
 {
-    function create(){
+    function create()
+    {
         return view('web.Ambil-Peran.create');
     }
     public function store(Request $request)
     {
-        // Validasi data input
+
         $request->validate([
             'nama_lengkap' => 'required|string',
             'email' => 'required|email',
@@ -25,28 +27,57 @@ class RoleRequestController extends Controller
             'rencana_acara' => 'required|string',
         ]);
 
-        // Mendapatkan informasi pengguna yang saat ini masuk
         $user = auth()->user();
 
-        // Membuat instance model RoleRequest
         $roleRequest = new RoleRequest();
 
-        // Mengisi nilai kolom dengan data dari formulir
-        $roleRequest->user_id = $user->id;
-        $roleRequest->full_name = $request->input('nama_lengkap');
+        $roleRequest->id_user = $user->id;
+        $roleRequest->nama_lengkap = $request->input('nama_lengkap');
         $roleRequest->email = $request->input('email');
-        $roleRequest->bo_telpon = $request->input('no_telpon');
+        $roleRequest->no_telpon = $request->input('no_telpon');
         $roleRequest->alamat = $request->input('alamat');
-        $roleRequest->pengalaman_terkait = $request->input('pengalaman');
+        $roleRequest->pengalaman = $request->input('pengalaman');
         $roleRequest->alasan = $request->input('alasan');
         $roleRequest->rencana_acara = $request->input('rencana_acara');
-        $roleRequest->request_role = 'penyelenggara'; // Atau sesuaikan dengan nilai default yang Anda inginkan
-        $roleRequest->request_status = 'Menunggu Konfirmasi';
+        $roleRequest->request_role = 'penyelenggara'; 
+        $roleRequest->status_request = 'Menunggu Konfirmasi';
+        $roleRequest->jumlah_edit = '0';
 
-        // Simpan data ke dalam tabel RoleRequest
+
         $roleRequest->save();
 
-        // Redirect atau tampilkan pesan sukses setelah data berhasil disimpan
-        return redirect()->back()->with('success', 'Permintaan peran berhasil dikirim.');
+        $this->sendNotificationToAdmin($roleRequest);
+
+        return redirect('Profil')->with('success', 'Permintaan peran berhasil dikirim.');
+    }
+
+    private function sendNotificationToAdmin(RoleRequest $roleRequest)
+    {
+            $notifikasi = new Notifikasi();
+            $notifikasi->user_id = $roleRequest->id_user;
+            $notifikasi->judul = 'Pengajuan peran baru';
+            $notifikasi->isi = 'Dari ' . $roleRequest->nama_lengkap;
+            $notifikasi->save();
+    }
+
+    function edit(RoleRequest $role_request)
+    {
+        $data['role_request'] = $role_request;
+        return view('web.Ambil-Peran.edit', $data);
+    }
+    public function update( RoleRequest $role_request)
+    {
+        if (request('nama_lengkap')) $role_request->nama_lengkap = (request('nama_lengkap'));
+        if (request('email')) $role_request->email = (request('email'));
+        if (request('no_telpon')) $role_request->no_telpon = (request('no_telpon'));
+        if (request('alamat')) $role_request->alamat = (request('alamat'));
+        if (request('pengalaman')) $role_request->pengalaman = (request('pengalaman'));
+        if (request('alasan')) $role_request->alasan = (request('alasan'));
+        if (request('rencana_acara')) $role_request->rencana_acara = (request('rencana_acara'));
+       
+        $role_request->jumlah_edit += 1;
+        $role_request->save();
+
+        return redirect('Profil')->with('success', 'Data berhasil diedit.');
     }
 }

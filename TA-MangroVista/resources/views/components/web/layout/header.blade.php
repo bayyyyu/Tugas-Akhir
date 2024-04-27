@@ -222,10 +222,10 @@
                                             <div class="profile-img-wrapper">
                                                 @if (Auth::user()->foto_profil)
                                                     <img src="{{ asset(auth()->user()->foto_profil) }}"
-                                                        class="img-radius" alt="User-Profile-Image" style="height: 100%;object-fit:cover">
+                                                        class="img-radius" alt="User-Profile-Image" style="object-fit:cover">
                                                 @else
                                                    <img src="{{ asset('/assets-web2/assets/images/user.png') }}"
-                                                        class="img-radius" alt="User-Profile-Image">
+                                                        class="img-radius" alt="User-Profile-Image" >
                                                 @endif
                                             </div>
                                         </a>

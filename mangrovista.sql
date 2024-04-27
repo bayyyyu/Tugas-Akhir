@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 16 Apr 2024 pada 16.20
+-- Waktu pembuatan: 27 Apr 2024 pada 18.17
 -- Versi server: 8.0.30
 -- Versi PHP: 8.1.10
 
@@ -112,6 +112,29 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `notifikasi`
+--
+
+CREATE TABLE `notifikasi` (
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `judul` varchar(255) DEFAULT NULL,
+  `isi` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data untuk tabel `notifikasi`
+--
+
+INSERT INTO `notifikasi` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
+(9, 43, 'Pengajuan peran baru', 'Dari Guntur Pamungkas', '2024-04-27 08:02:48', '2024-04-27 08:02:48'),
+(10, 41, 'Pengajuan peran baru', 'Dari Anwar Zaim', '2024-04-27 08:03:28', '2024-04-27 08:03:28');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `role_request`
 --
 
@@ -127,6 +150,7 @@ CREATE TABLE `role_request` (
   `alasan` text,
   `rencana_acara` text,
   `status_request` enum('Diterima','Ditolak','Menunggu Konfirmasi') DEFAULT NULL,
+  `jumlah_edit` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -135,8 +159,9 @@ CREATE TABLE `role_request` (
 -- Dumping data untuk tabel `role_request`
 --
 
-INSERT INTO `role_request` (`id`, `id_user`, `request_role`, `nama_lengkap`, `email`, `no_telpon`, `alamat`, `pengalaman`, `alasan`, `rencana_acara`, `status_request`, `created_at`, `updated_at`) VALUES
-(1, 41, 'penyelenggara', 'Anwar Zaim', 'zaim@gmail.com', 89694456329, 'Jl. Sei Karya, Payah Kumang, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan Barat 78813', '-', 'karena saya ingin membuat sebuah event', 'Event penanaman mangroe', 'Menunggu Konfirmasi', '2024-03-01 13:25:59', '2024-03-07 15:58:10');
+INSERT INTO `role_request` (`id`, `id_user`, `request_role`, `nama_lengkap`, `email`, `no_telpon`, `alamat`, `pengalaman`, `alasan`, `rencana_acara`, `status_request`, `jumlah_edit`, `created_at`, `updated_at`) VALUES
+(9, 43, 'penyelenggara', 'Guntur Pamungkas', 'guntur123@gmail.com', 81234567890, '-', '-', '-', '-', 'Menunggu Konfirmasi', 0, '2024-04-27 08:02:48', '2024-04-27 18:10:22'),
+(10, 41, 'penyelenggara', 'Anwar Zaim', 'zaim@gmail.com', 81234567890, '-', '-', '-', '-', 'Menunggu Konfirmasi', 0, '2024-04-27 08:03:28', '2024-04-27 08:03:28');
 
 -- --------------------------------------------------------
 
@@ -204,9 +229,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `role`, `nama_lengkap`, `username`, `email`, `password`, `jenis_kelamin`, `foto_profil`, `bio`, `tgl_lahir`, `remember_token`, `created_at`, `updated_at`) VALUES
 (27, 'admin', 'Admin', 'admin', 'admin@gmail.com', '$2y$10$/GsgC.VGUJ2Llo3dNOlsp.XWmoGgq7m7KERX4sF/ngWOE32MVocDi', NULL, 'images/User/27-1685021268-o67CV.jpg', NULL, NULL, NULL, '2023-05-04 20:32:12', '2023-05-25 06:27:48'),
-(36, 'admin', 'Bayu Pratama', 'bayu', 'bayu@gmail.com', '$2y$10$uX1tniAjAgyehjYzOUOB4ustAarEHtTIFZ6/tzzPrOQWC6VyqBoBi', NULL, 'images/User/36-1707053268-EvWsT.jpg', ' Saya selalu melihat sisi positif dalam setiap situasi dan percaya bahwa setiap tantangan adalah peluang untuk tumbuh dan berkembang.', NULL, '70VPfJD49YpP35DBdIvr5qxJSkBRIkf8FtuBEKi0cC2AcibuoMMYLR5JW1hY', '2023-05-25 06:20:30', '2024-03-07 15:40:46'),
-(41, 'pengguna', 'Anwar Zaim1', 'zaim', 'zaim@gmail.com', '$2y$10$YsmFDWHIoaPCtdLK/VoYjuG3L4WgBonaPGn8cOoEW5i1kCblnXubm', 'Laki-laki', 'images/User/41-1708970821-ZqyBz.jpg', NULL, '2014-02-06', 'KhhpmmLfKdNfWvjl4WLDb4OARA48aQgNMsfbxH6O0JHkGwa3SWwomURnkXxd', '2024-02-02 12:11:21', '2024-03-21 15:25:15'),
-(43, 'pengguna', 'Guntur Pamungkas', 'guntur', 'guntur123@gmail.com', '$2y$10$jE8xi1w7keGY.u.r3ycPue3YP3YtDUZ58pIP3YM3Xm0U646ruPCVW', NULL, NULL, NULL, NULL, NULL, '2024-02-11 09:20:59', '2024-02-11 17:27:49');
+(36, 'admin', 'Bayu Pratama', 'bayu', 'bayu@gmail.com', '$2y$10$uX1tniAjAgyehjYzOUOB4ustAarEHtTIFZ6/tzzPrOQWC6VyqBoBi', NULL, 'images/User/36-1707053268-EvWsT.jpg', ' Saya selalu melihat sisi positif dalam setiap situasi dan percaya bahwa setiap tantangan adalah peluang untuk tumbuh dan berkembang.', NULL, 'ihC9lzyMiViB82c3MLcfIWQi5rh8F4jaTYDvWVvJ8PvBlTzvz2x5cMcPcwFn', '2023-05-25 06:20:30', '2024-04-27 15:02:19'),
+(41, 'pengguna', 'Anwar Zaim1', 'zaim', 'zaim@gmail.com', '$2y$10$YsmFDWHIoaPCtdLK/VoYjuG3L4WgBonaPGn8cOoEW5i1kCblnXubm', 'Laki-laki', 'images/User/41-1708970821-ZqyBz.jpg', NULL, '2014-02-06', 'FZ1B3JJg5K8lMFjTcF19LEgKosOaiAwNCxOlGTY1t4mjKjcbPeuoU0JMTQFm', '2024-02-02 12:11:21', '2024-04-27 15:03:58'),
+(43, 'pengguna', 'Guntur Pamungkas', 'guntur', 'guntur123@gmail.com', '$2y$10$jE8xi1w7keGY.u.r3ycPue3YP3YtDUZ58pIP3YM3Xm0U646ruPCVW', NULL, 'images/User/43-1714207436-gNiNC.jpg', NULL, NULL, NULL, '2024-02-11 09:20:59', '2024-04-27 01:43:56');
 
 --
 -- Indexes for dumped tables
@@ -228,6 +253,12 @@ ALTER TABLE `katalog_pohon`
 -- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `notifikasi`
+--
+ALTER TABLE `notifikasi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -271,10 +302,16 @@ ALTER TABLE `migrations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `notifikasi`
+--
+ALTER TABLE `notifikasi`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT untuk tabel `role_request`
 --
 ALTER TABLE `role_request`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `tanaman`

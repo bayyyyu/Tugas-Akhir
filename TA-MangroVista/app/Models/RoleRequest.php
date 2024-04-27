@@ -11,7 +11,7 @@ class RoleRequest extends Model
     protected $fillable = [
         'user_id','request_role','status_request','nama_lengkap',
         'email','no_telpon','alamat','pengalaman','alasan',
-        'rencana_acara',
+        'rencana_acara','jumlah_edit',
     ];
     public function user()
     {

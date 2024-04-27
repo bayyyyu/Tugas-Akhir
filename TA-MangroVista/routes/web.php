@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminControllers\UserController;
 use App\Http\Controllers\AdminControllers\AdminEventController;
 use App\Http\Controllers\AdminControllers\AdminKatalogPohonController;
 use App\Http\Controllers\AdminControllers\DokumentasiController;
+use App\Http\Controllers\AdminControllers\NotifikasiController;
+use App\Http\Controllers\AdminControllers\PengajuanPeranController;
 use App\Http\Controllers\WebControllers\AboutController;
 use App\Http\Controllers\WebControllers\ErrorController;
 use App\Http\Controllers\WebControllers\EventController;
@@ -89,6 +91,12 @@ Route::get('Admin/User/{user}/edit', [UserController::class, 'edit'])->middlewar
 Route::put('Admin/User/{user}', [UserController::class, 'update'])->middleware('isError');
 Route::delete('Admin/User/{user}', [UserController::class, 'destroy'])->middleware('isError');
 
+//Pengajuan-Peran
+Route::get('Admin/Pengajuan-Peran', [PengajuanPeranController::class, 'index'])->middleware('isError');
+
+
+
+
 //Error
 Route::get('404', [ErrorController::class, 'index']);
 
@@ -123,6 +131,13 @@ Route::get('Profil', [ProfilController::class, 'index']);
 Route::put('Profil/{user}', [ProfilController::class, 'updatePengaturanAkun']);
 
 //Web/Ambil Peran
-Route::get('Ambil-Peran', [RoleRequestController::class, 'create']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('Ambil-Peran/create', [RoleRequestController::class, 'create']);
+    Route::post('Ambil-Peran', [RoleRequestController::class, 'store']);
+    Route::get('Ambil-Peran/{role_request}/edit', [RoleRequestController::class, 'edit']);
+    Route::put('Ambil-Peran/{role_request}', [RoleRequestController::class, 'update']);
+});
+
+// Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 
 
