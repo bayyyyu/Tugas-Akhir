@@ -554,9 +554,40 @@
                                                         <div class="wraps ">
                                                             <div class="overlays">
                                                                 <div class="overlay-contents animate">
-                                                                    <div class="blue-rectangle animate slide">
+                                                                    @php
+                                                                        $status = $role_request->status_request;
+                                                                        $background_color = '';
+                                                                        $image_path = '';
+
+                                                                        switch ($status) {
+                                                                            case 'Menunggu Konfirmasi':
+                                                                                $background_color = '#4E9ED4';
+                                                                                $image_path =
+                                                                                    url('/') .
+                                                                                    '/assets-web2/assets/images/peran/wait.png';
+                                                                                break;
+                                                                            case 'Diterima':
+                                                                                $background_color = '#06A44B';
+                                                                                $image_path =
+                                                                                    url('/') .
+                                                                                    '/assets-web2/assets/images/peran/confirm.png';
+                                                                                break;
+                                                                            case 'Ditolak':
+                                                                                $background_color = '#f5325c';
+                                                                                $image_path =
+                                                                                    url('/') .
+                                                                                    '/assets-web2/assets/images/peran/sad.png';
+                                                                                break;
+                                                                            default:
+                                                                                $background_color = 'transparent';
+                                                                                break;
+                                                                        }
+                                                                    @endphp
+
+                                                                    <div class="blue-rectangle animate slide"
+                                                                        style="background-color: {{ $background_color }};">
                                                                         <p
-                                                                            style="color: white; font-weight: bolder; margin-top:-5px">
+                                                                            style="color: white; font-weight: bolder; margin-top: -5px;">
                                                                             {{ $role_request->status_request }}
                                                                         </p>
                                                                     </div>
@@ -568,8 +599,7 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="image-contents animate slide ">
-                                                                    <img src="{{ url('/') }}/assets-web2/assets/images/peran/wait.png"
-                                                                        alt="">
+                                                                    <img src="{{ $image_path }}" alt="">
                                                                 </div>
                                                                 <div class="dots animate">
                                                                     <div class="btn btn-sm button-transform animate slide-up mt-3 button-border"
@@ -584,11 +614,14 @@
                                                             <div class="text">
                                                                 <p
                                                                     style="text-align: center; justify-content:center; font-weight:bolder;">
-                                                                    <span> Data Pengajuan Pengambilan Peran @if ($role_request->jumlah_edit < 1)
+                                                                    <span> Data Pengajuan Pengambilan Peran @if (
+                                                                        $role_request->jumlah_edit < 1 &&
+                                                                            $role_request->status_request != 'Ditolak' &&
+                                                                            $role_request->status_request != 'Diterima')
                                                                             <a href="{{ url('Ambil-Peran', $role_request->id) }}/edit"
                                                                                 class="btn btn-sm"
                                                                                 style="display: inline-block">
-                                                                                <i class="icofont-edit"></i>
+                                                                                <i class="icofont-edit"></i> Edit
                                                                             </a>
                                                                         @endif
                                                                     </span>

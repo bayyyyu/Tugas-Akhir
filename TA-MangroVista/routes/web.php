@@ -93,7 +93,8 @@ Route::delete('Admin/User/{user}', [UserController::class, 'destroy'])->middlewa
 
 //Pengajuan-Peran
 Route::get('Admin/Pengajuan-Peran', [PengajuanPeranController::class, 'index'])->middleware('isError');
-
+Route::get('Admin/Pengajuan-Peran/{role_request}', [PengajuanPeranController::class, 'show'])->middleware('isError');
+Route::put('Admin/Pengajuan-Peran/{role_request}', [PengajuanPeranController::class, 'reject'])->middleware('isError');
 
 
 

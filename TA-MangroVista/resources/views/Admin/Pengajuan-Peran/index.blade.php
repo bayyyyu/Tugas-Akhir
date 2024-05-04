@@ -32,13 +32,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a href="{{ url('Admin/Pengajuan-Peran', $role_request->id) }}"
-                                                class="btn btn-dark btn-sm"><i class="fa fa-info"></i></a>
-                                            <a href="{{ url('Admin/Pengajuan-Peran', $role_request->id) }}/edit"
-                                                class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-                                            <x-button.delete id="{{ $role_request->id }}" />
-                                        </div>
+                                        <a href="{{ url('Admin/Pengajuan-Peran', $role_request->id) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-info"></i>
+                                        </a>
+                                        <x-button.delete id="{{ $role_request->id }}" />
                                     </td>
                                     <td>{{ $role_request->nama_lengkap }}</td>
                                     <td>{{ $role_request->created_at->isoFormat('DD MMMM YYYY', 'Do MMMM YYYY') }}

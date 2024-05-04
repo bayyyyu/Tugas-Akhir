@@ -80,4 +80,17 @@ class RoleRequestController extends Controller
 
         return redirect('Profil')->with('success', 'Data berhasil diedit.');
     }
+    // public function reject(Request $request, RoleRequest $role_request)
+    // {
+        
+    //     $request->validate([
+    //         'rejection_reason' => 'required|string',
+    //     ]);
+
+    //     $role_request->status_request = 'Ditolak';
+    //     $role_request->alasan_penolakan = $request->input('rejection_reason');
+    //     $role_request->save();
+
+    //     return redirect('Pengajuan-Peran')->with('success', 'Status pengajuan ditolak.');
+    // }
 }
