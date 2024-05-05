@@ -123,12 +123,19 @@
                         </div><!--end col-->
                         <div class="col-lg-12 col-xl-4">
                             <div class="float-end d-print-none">
-                                <a href="javascript:window.print()" class="btn btn-soft-info btn-sm">Print</a>
-                                <a href="#" class="btn btn-soft-success btn-sm">Konfirmasi</a>
-                                <button type="button" class="btn btn-soft-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalLarge">
-                                    Tolak
-                                </button>
+                                <form action="{{ url('Admin/Pengajuan-Peran/' . $role_request->id . '/confirm')}}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')  
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <a href="javascript:window.print()" class="btn btn-soft-info btn-sm">Print</a>
+                                    {{-- <a href="#" class="btn btn-soft-success btn-sm">Konfirmasi</a> --}}
+                                    <button type="submit" class="btn btn-soft-success btn-sm">Konfirmasi</button>
+                                    <button type="button" class="btn btn-soft-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalLarge">
+                                        Tolak
+                                    </button>
+                                </form>
                             </div>
                         </div><!--end col-->
                     </div><!--end row-->
@@ -146,7 +153,7 @@
                     <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ url('Admin/Pengajuan-Peran', $role_request->id) }}" method="post"
+                <form action="{{ url('Admin/Pengajuan-Peran/' . $role_request->id . '/reject') }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

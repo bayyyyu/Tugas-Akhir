@@ -14,4 +14,8 @@ class Notifikasi extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function roleRequest()
+    {
+        return $this->hasOne(RoleRequest::class);
+    }
 }

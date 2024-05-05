@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 04 Bulan Mei 2024 pada 17.56
+-- Waktu pembuatan: 05 Bulan Mei 2024 pada 15.33
 -- Versi server: 8.0.30
 -- Versi PHP: 8.1.10
 
@@ -130,7 +130,8 @@ CREATE TABLE `notifikasi` (
 
 INSERT INTO `notifikasi` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
 (9, 43, 'Pengajuan peran baru', 'Dari Guntur Pamungkas', '2024-04-27 08:02:48', '2024-04-27 08:02:48'),
-(11, 41, 'Pengajuan peran baru', 'Dari Anwar Zaim', '2024-05-01 21:43:04', '2024-05-01 21:43:04');
+(11, 41, 'Pengajuan peran baru', 'Dari Anwar Zaim', '2024-05-01 21:43:04', '2024-05-01 21:43:04'),
+(12, 46, 'Pengajuan peran baru', 'Dari user', '2024-05-05 04:56:02', '2024-05-05 04:56:02');
 
 -- --------------------------------------------------------
 
@@ -141,6 +142,7 @@ INSERT INTO `notifikasi` (`id`, `user_id`, `judul`, `isi`, `created_at`, `update
 CREATE TABLE `role_request` (
   `id` int NOT NULL,
   `id_user` int DEFAULT NULL,
+  `notifikasi_id` int DEFAULT NULL,
   `request_role` enum('penyelenggara') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `nama_lengkap` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -160,9 +162,10 @@ CREATE TABLE `role_request` (
 -- Dumping data untuk tabel `role_request`
 --
 
-INSERT INTO `role_request` (`id`, `id_user`, `request_role`, `nama_lengkap`, `email`, `no_telpon`, `alamat`, `pengalaman`, `alasan`, `rencana_acara`, `status_request`, `alasan_penolakan`, `jumlah_edit`, `created_at`, `updated_at`) VALUES
-(9, 43, 'penyelenggara', 'Guntur Pamungkas', 'guntur123@gmail.com', 81234567890, 'Jl. Letjend S. Parman Kelurahan No.67, Sukaharja, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan Barat 78811', '-', '-', '-', 'Ditolak', 'tidak lengkap', 0, '2024-04-27 08:02:48', '2024-05-04 10:22:11'),
-(11, 41, 'penyelenggara', 'Anwar Zaim jr', 'zaim@gmail.com', 81234567890, '-', '-', '-', '-', 'Menunggu Konfirmasi', NULL, 1, '2024-05-01 21:43:04', '2024-05-04 17:54:09');
+INSERT INTO `role_request` (`id`, `id_user`, `notifikasi_id`, `request_role`, `nama_lengkap`, `email`, `no_telpon`, `alamat`, `pengalaman`, `alasan`, `rencana_acara`, `status_request`, `alasan_penolakan`, `jumlah_edit`, `created_at`, `updated_at`) VALUES
+(9, 43, 9, 'penyelenggara', 'Guntur Pamungkas', 'guntur123@gmail.com', 81234567890, 'Jl. Letjend S. Parman Kelurahan No.67, Sukaharja, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan Barat 78811', '-', '-', '-', 'Ditolak', 'blablablabla', 0, '2024-04-27 08:02:48', '2024-05-05 15:04:46'),
+(11, 41, 11, 'penyelenggara', 'Anwar Zaim jr', 'zaim@gmail.com', 81234567890, '-', '-', '-', '-', 'Diterima', 'blablabnlabalala', 1, '2024-05-01 21:43:04', '2024-05-05 15:04:49'),
+(12, 46, 12, 'penyelenggara', 'user', 'user@gmail.com', 81234567890, 'Jl. Pangeran Kusuma Jaya, Negeri Baru, Kec. Benua Kayong, Kabupaten Ketapang, Kalimantan Barat 78813', 'Ketua PDI', 'ingin menyebarluaskan event penanaman mangrove', 'Event diamond Kuning', 'Menunggu Konfirmasi', NULL, 0, '2024-05-05 04:56:02', '2024-05-05 15:04:52');
 
 -- --------------------------------------------------------
 
@@ -230,9 +233,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `role`, `nama_lengkap`, `username`, `email`, `password`, `jenis_kelamin`, `foto_profil`, `bio`, `tgl_lahir`, `remember_token`, `created_at`, `updated_at`) VALUES
 (27, 'admin', 'Admin', 'admin', 'admin@gmail.com', '$2y$10$/GsgC.VGUJ2Llo3dNOlsp.XWmoGgq7m7KERX4sF/ngWOE32MVocDi', NULL, 'images/User/27-1685021268-o67CV.jpg', NULL, NULL, NULL, '2023-05-04 20:32:12', '2023-05-25 06:27:48'),
-(36, 'admin', 'Bayu Pratama', 'bayu', 'bayu@gmail.com', '$2y$10$uX1tniAjAgyehjYzOUOB4ustAarEHtTIFZ6/tzzPrOQWC6VyqBoBi', NULL, 'images/User/36-1707053268-EvWsT.jpg', ' Saya selalu melihat sisi positif dalam setiap situasi dan percaya bahwa setiap tantangan adalah peluang untuk tumbuh dan berkembang.', NULL, 'cQRRBht0wMtFtV75b7vDLJAevUYgvosaU9BPCjLEwXeRX2WPyH3jQC3urhyn', '2023-05-25 06:20:30', '2024-05-04 17:51:21'),
-(41, 'pengguna', 'Anwar Zaim1', 'zaim', 'zaim@gmail.com', '$2y$10$YsmFDWHIoaPCtdLK/VoYjuG3L4WgBonaPGn8cOoEW5i1kCblnXubm', 'Laki-laki', 'images/User/41-1708970821-ZqyBz.jpg', NULL, '2014-02-06', 'lKwFTbPnyw82yhQ9zhQWlKzFPzUAwWeCHNCcYcaHTRDeAJQsn7HTehBVCsvy', '2024-02-02 12:11:21', '2024-05-04 17:42:25'),
-(43, 'pengguna', 'Guntur Pamungkas', 'guntur', 'guntur123@gmail.com', '$2y$10$jE8xi1w7keGY.u.r3ycPue3YP3YtDUZ58pIP3YM3Xm0U646ruPCVW', NULL, 'images/User/43-1714207436-gNiNC.jpg', NULL, NULL, NULL, '2024-02-11 09:20:59', '2024-04-27 01:43:56');
+(36, 'admin', 'Bayu Pratama', 'bayu', 'bayu@gmail.com', '$2y$10$uX1tniAjAgyehjYzOUOB4ustAarEHtTIFZ6/tzzPrOQWC6VyqBoBi', NULL, 'images/User/36-1707053268-EvWsT.jpg', ' Saya selalu melihat sisi positif dalam setiap situasi dan percaya bahwa setiap tantangan adalah peluang untuk tumbuh dan berkembang.', NULL, 'CIbEYz8RpibjZFiRQbCXYBCYkmnGGGd50tdWraizsQsnaYpYnPomnyrLPt0L', '2023-05-25 06:20:30', '2024-05-05 11:51:40'),
+(41, 'penyelenggara', 'Anwar Zaim1', 'zaim', 'zaim@gmail.com', '$2y$10$YsmFDWHIoaPCtdLK/VoYjuG3L4WgBonaPGn8cOoEW5i1kCblnXubm', 'Laki-laki', 'images/User/41-1708970821-ZqyBz.jpg', NULL, '2014-02-06', 'APZUUmyWE5A3ZLUjFmJgEdaJfcV7ZGgohWlqnQlCRUGKcUVR6uAfmP5z27vA', '2024-02-02 12:11:21', '2024-05-05 03:44:23'),
+(43, 'pengguna', 'Guntur Pamungkas', 'guntur', 'guntur123@gmail.com', '$2y$10$jE8xi1w7keGY.u.r3ycPue3YP3YtDUZ58pIP3YM3Xm0U646ruPCVW', NULL, 'images/User/43-1714207436-gNiNC.jpg', NULL, NULL, NULL, '2024-02-11 09:20:59', '2024-05-05 02:15:24'),
+(46, 'pengguna', 'user', 'usertyz', 'user@gmail.com', '$2y$10$BdFtK6hItADRMDBfmWB4dea8Jk3tT0GH5MvgvIveDgLN4AfPXnEjK', NULL, NULL, NULL, NULL, NULL, '2024-05-05 04:52:44', '2024-05-05 04:52:44');
 
 --
 -- Indexes for dumped tables
@@ -306,13 +310,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `role_request`
 --
 ALTER TABLE `role_request`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `tanaman`
@@ -324,7 +328,7 @@ ALTER TABLE `tanaman`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -18,25 +18,27 @@
                     <div class="notification-menu" data-simplebar>
                         @if ($list_notifikasi->isNotEmpty())
                             @foreach ($list_notifikasi as $notif)
-                                <a href="#" class="dropdown-item py-3">
+                                <a href="{{ url('Admin/Pengajuan-Peran', $notif->roleRequest->id) }}"
+                                    class="dropdown-item py-3 notification-item" data-id="{{ $notif->id }}">
                                     <small
-                                        class="float-end text-muted ps-2">{{ $notif->created_at->diffForHumans() }}
-                                    </small>
+                                        class="float-end text-muted ps-2">{{ $notif->created_at->diffForHumans() }}</small>
                                     <div class="media">
                                         <div class="avatar-md bg-soft-primary">
-                                           <img src="{{ asset($notif->user->foto_profil) }}" class="align-self-center icon-lg rounded-circle">
+                                            <img src="{{ asset($notif->user->foto_profil) }}"
+                                                class="align-self-center icon-lg rounded-circle">
                                         </div>
                                         <div class="media-body align-self-center ms-2 text-truncate">
                                             <h6 class="my-0 fw-normal text-dark">{{ $notif->judul }}</h6>
                                             <small class="text-muted mb-0">{{ $notif->isi }}</small>
-                                        </div><!--end media-body-->
-                                    </div><!--end media-->
-                                </a><!--end-item-->
+                                        </div>
+                                    </div>
+                                </a>
                             @endforeach
                         @else
                             <p>Tidak Ada Notifikasi</p>
                         @endif
                     </div>
+
 
                     <!-- All-->
                     <a href="javascript:void(0);" class="dropdown-item text-center text-primary">

@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('components.layout.header', function ($view) {
-            $notifikasi = Notifikasi::all();
+            $notifikasi = Notifikasi::with('roleRequest')->get();
             $view->with('list_notifikasi', $notifikasi);
         });
         Paginator::useBootstrap();
