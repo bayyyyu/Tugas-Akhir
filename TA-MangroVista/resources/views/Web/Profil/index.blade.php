@@ -96,7 +96,7 @@
             background-color: #75B1F2;
             padding: 5px;
             border-radius: 5px;
-            width: 12vw;
+            width: 13vw;
             max-width: 100vw;
             height: 20px;
         }
@@ -424,9 +424,89 @@
                 font-size: 14px;
                 /* Sesuaikan ukuran teks */
             }
+        }
 
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            display: flex;
 
+        }
 
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+
+        }
+
+        .tab button::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #bdbdbd;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #f5faf8;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            color: #018d58;
+            /* Warna teks hijau untuk tombol aktif */
+        }
+
+        /* Style the underline for active tab */
+        .tab button.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #018d58;
+            /* Warna underline hijau untuk tombol aktif */
+        }
+
+        #BelumKonfirmasi p.tab-belum-konfirmasi {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            margin-left: 40%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #London p.tab-belum-konfirmasi {
+                margin-left: 20%;
+            }
+        }
+
+        #SudahKonfirmasi p.tab-sudah-konfirmasi {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            margin-left: 40%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #London p.tab-sudah-konfirmasi {
+                margin-left: 20%;
+            }
         }
     </style>
     <div class="container">
@@ -538,182 +618,465 @@
                             <div class="tab-content-item" id="Partisipasi-content" style="display:none;">
                                 <!-- Konten untuk tab Partisipasi -->
                             </div>
+
                             <div class="tab-content-item" id="pengajuan-content" style="display:none;">
-                                <!-- Konten untuk tab Pengajuan -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <th width="5px">No</th>
+                                                        <th width="100px">Aksi</th>
+                                                        <th>Nama Event</th>
+                                                        <th>Status</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a href="{{ url('Admin/Katalog-Pohon') }}"
+                                                                        class="btn btn-dark btn-sm"><i
+                                                                            class="fa fa-info"></i></a>
+                                                                    <a href="{{ url('Admin/Katalog-Pohon') }}/edit"
+                                                                        class="btn btn-warning btn-sm"><i
+                                                                            class="fa fa-edit"></i></a>
+                                                                    {{-- <x-button.delete id="{{ $katalog_pohon->id }}" /> --}}
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div>
                             </div>
+
 
                             <!-- Konten untuk tab Peran -->
                             <div class="tab-content-item" id="peran-content" style="display:none;">
+                                {{-- <section class="shop-single">
+                                    <div class="container">
+                                        <div class="row justify-content-center mb-15">
+                                            <div class="col-lg-12 sticky-widget">
+                                                <div class="review">
+                                                    <ul class="agri-ul review-nav">
+                                                        <li class="desc active" data-target="description-show">
+                                                            Belum Konfirmasi
+                                                        </li>
+                                                        <li class="rev " data-target="review-content-show">
+                                                            Sudah Konfrimasi
+                                                        </li>
+                                                    </ul>
+                                                    <div class="review-content review-content-show">
+                                                        <div class="review-showing">
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            @if (!is_null($list_role_request) && count($list_role_request) > 0)
-                                                @foreach ($list_role_request as $role_request)
-                                                    <div class="col-md-6 mb-2">
-                                                        <div class="wraps ">
-                                                            <div class="overlays">
-                                                                <div class="overlay-contents animate">
-                                                                    @php
-                                                                        $status = $role_request->status_request;
-                                                                        $background_color = '';
-                                                                        $image_path = '';
-
-                                                                        switch ($status) {
-                                                                            case 'Menunggu Konfirmasi':
-                                                                                $background_color = '#4E9ED4';
-                                                                                $image_path =
-                                                                                    url('/') .
-                                                                                    '/assets-web2/assets/images/peran/wait.png';
-                                                                                break;
-                                                                            case 'Diterima':
-                                                                                $background_color = '#06A44B';
-                                                                                $image_path =
-                                                                                    url('/') .
-                                                                                    '/assets-web2/assets/images/peran/confirm.png';
-                                                                                break;
-                                                                            case 'Ditolak':
-                                                                                $background_color = '#f5325c';
-                                                                                $image_path =
-                                                                                    url('/') .
-                                                                                    '/assets-web2/assets/images/peran/sad.png';
-                                                                                break;
-                                                                            default:
-                                                                                $background_color = 'transparent';
-                                                                                break;
-                                                                        }
-                                                                    @endphp
-
-                                                                    <div class="blue-rectangle animate slide"
-                                                                        style="background-color: {{ $background_color }};">
-                                                                        <p
-                                                                            style="color: white; font-weight: bolder; margin-top: -5px;">
-                                                                            {{ $role_request->status_request }}
-                                                                        </p>
-                                                                    </div>
-                                                                    <p class="animate slide "
-                                                                        style="color: white; margin-bottom: -0.2rem;">
-                                                                        Diajukan Pada:
-                                                                        <br>
-                                                                        {{ \Carbon\Carbon::parse($role_request->created_at)->translatedFormat('d F Y') }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="image-contents animate slide ">
-                                                                    <img src="{{ $image_path }}" alt="">
-                                                                </div>
-                                                                <div class="dots animate">
-                                                                    <div class="btn btn-sm button-transform animate slide-up mt-3 button-border"
-                                                                        onclick="toggleTransform(this)">
-                                                                        <span
-                                                                            style="color: white; font-size:10px">Lihat
-                                                                            Detail
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="text">
-                                                                <p
-                                                                    style="text-align: center; justify-content:center; font-weight:bolder;">
-                                                                    <span> Data Pengajuan Pengambilan Peran @if (
-                                                                        $role_request->jumlah_edit < 1 &&
-                                                                            $role_request->status_request != 'Ditolak' &&
-                                                                            $role_request->status_request != 'Diterima')
-                                                                            <a href="{{ url('Ambil-Peran', $role_request->id) }}/edit"
-                                                                                class="btn btn-sm"
-                                                                                style="display: inline-block">
-                                                                                <i class="icofont-edit"></i> Edit
-                                                                            </a>
-                                                                        @endif
-                                                                    </span>
-                                                                </p>
-                                                                <hr style="margin-top: -20px">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <span class="label-peran"
-                                                                                    class="label-peran">Nama
-                                                                                    Lengkap</span>
-                                                                                <p>{{ $role_request->nama_lengkap }}</p>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <span class="label-peran">Email</span>
-                                                                                <p>{{ $role_request->email }}</p>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <span class="label-peran">No.
-                                                                                    Telpon</span>
-                                                                                <p>+62 {{ $role_request->no_telpon }}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <span class="label-peran">Ambil Peran
-                                                                                    Sebagai</span>
-                                                                                <p>{{ $role_request->request_role }}
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <hr style="margin-top: -15px">
-                                                                        <div class="col-md-12"
-                                                                            style="text-align: center">
-                                                                            <span class="label-peran">Alamat
-                                                                                Lengkap</span>
-                                                                            <p>{!! $role_request->alamat !!}</p>
-                                                                        </div>
-                                                                        <hr style="margin-top: -15px">
-                                                                        <div class="col-md-12"
-                                                                            style="text-align: center">
-                                                                            <span class="label-peran">Pengalaman
-                                                                                Terkait</span>
-                                                                            <p>{!! $role_request->pengalaman !!}</p>
-                                                                        </div>
-                                                                        <hr style="margin-top: -15px">
-                                                                        <div class="col-md-12"
-                                                                            style="text-align: center">
-                                                                            <span class="label-peran">Alasan Mengambil
-                                                                                Peran</span>
-                                                                            <p>{!! $role_request->alasan !!}</p>
-                                                                        </div>
-                                                                        <hr style="margin-top: -15px">
-                                                                        <div class="col-md-12"
-                                                                            style="text-align: center">
-                                                                            <span class="label-peran">Rencana
-                                                                                Acara</span>
-                                                                            <p>{!! $role_request->rencana_acara !!}</p>
-                                                                        </div>
-                                                                        <hr style="margin-top: -15px">
-                                                                    </div>
-                                                                    <div class="col-md-12 " style="margin-top: 20px;">
-                                                                        <div class="btn btn-sm "
-                                                                            onclick="restoreOverlay()"
-                                                                            style="border: 1px solid #064635; border radius:5px">
-                                                                            <p
-                                                                                style="color: #064635; margin-bottom:0; margin-top:-20px">
-                                                                                Tutup</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                        </div>
+                                                        <div class="description">
+                                                            
                                                         </div>
                                                     </div>
-                                                @endforeach
-                                            @else
-                                                <div class="col-md-12"
-                                                    style="display: flex; justify-content: center; align-items: center; height: 60vh;">
-                                                    <div
-                                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                                        <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
-                                                            style="width: 100px; height: 100px;" class="mb-3">
-                                                        <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan peran.
-                                                        </p>
-                                                        <a href="{{ url('Ambil-Peran/create') }}"
-                                                            class="btn btn-md button-transform button-border"
-                                                            style="color: white; font-size:15px">Ajukan Sekarang</a>
-                                                    </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section> --}}
+                                <div class="tab">
+                                    <button class="tablinks" onclick="openCity(event, 'BelumKonfirmasi')"
+                                        id="defaultOpen">Belum
+                                        Konfirmasi</button>
+                                    <button class="tablinks" onclick="openCity(event, 'SudahKonfirmasi')">Sudah
+                                        Konfirmasi</button>
+                                </div>
+                                <!-- Tab content -->
+                                <div id="BelumKonfirmasi" class="tabcontent">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                @if (!is_null($list_role_request) && count($list_role_request) > 0)
+                                                    @foreach ($list_role_request as $role_request)
+                                                        @if ($role_request->status_request == 'Menunggu Konfirmasi')
+                                                            <div class="col-md-6 mb-2">
+                                                                <div class="wraps ">
+                                                                    <div class="overlays">
+                                                                        <div class="overlay-contents animate">
+                                                                            @php
+                                                                                $image_path = '';
 
+                                                                                switch ($role_request->status_request) {
+                                                                                    case 'Menunggu Konfirmasi':
+                                                                                        $image_path =
+                                                                                            url('/') .
+                                                                                            '/assets-web2/assets/images/peran/wait.png';
+                                                                                        break;
+                                                                                }
+                                                                            @endphp
 
-                                            @endif
+                                                                            <div class="blue-rectangle animate slide">
+                                                                                <p
+                                                                                    style="color: white; font-weight: bolder; margin-top: -5px;">
+                                                                                    {{ $role_request->status_request }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <p class="animate slide "
+                                                                                style="color: white; margin-bottom: -0.2rem;">
+                                                                                Diajukan Pada:
+                                                                                <br>
+                                                                                {{ \Carbon\Carbon::parse($role_request->created_at)->translatedFormat('d F Y') }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="image-contents animate slide ">
+                                                                            <img src="{{ $image_path }}"
+                                                                                alt="">
+                                                                        </div>
+                                                                        <div class="dots animate">
+                                                                            <div class="btn btn-sm button-transform animate slide-up mt-3 button-border"
+                                                                                onclick="toggleTransform(this)">
+                                                                                <span
+                                                                                    style="color: white; font-size:10px">Lihat
+                                                                                    Detail</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="text">
+                                                                        <p
+                                                                            style="text-align: center; justify-content:center; font-weight:bolder;">
+                                                                            <span> Data Pengajuan Pengambilan Peran
+                                                                                @if (
+                                                                                    $role_request->jumlah_edit < 1 &&
+                                                                                        $role_request->status_request != 'Ditolak' &&
+                                                                                        $role_request->status_request != 'Diterima')
+                                                                                    <a href="{{ url('Ambil-Peran', $role_request->id) }}/edit"
+                                                                                        class="btn btn-sm"
+                                                                                        style="display: inline-block">
+                                                                                        <i class="icofont-edit"></i>
+                                                                                        Edit
+                                                                                    </a>
+                                                                                @endif
+                                                                            </span>
+                                                                        </p>
+                                                                        <hr style="margin-top: -20px">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <span class="label-peran"
+                                                                                            class="label-peran">Nama
+                                                                                            Lengkap</span>
+                                                                                        <p>{{ $role_request->nama_lengkap }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span
+                                                                                            class="label-peran">Email</span>
+                                                                                        <p>{{ $role_request->email }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span class="label-peran">No.
+                                                                                            Telpon</span>
+                                                                                        <p>+62
+                                                                                            {{ $role_request->no_telpon }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span class="label-peran">Ambil
+                                                                                            Peran
+                                                                                            Sebagai</span>
+                                                                                        <p>{{ $role_request->request_role }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span class="label-peran">Alamat
+                                                                                        Lengkap</span>
+                                                                                    <p>{!! $role_request->alamat !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span
+                                                                                        class="label-peran">Pengalaman
+                                                                                        Terkait</span>
+                                                                                    <p>{!! $role_request->pengalaman !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span class="label-peran">Alasan
+                                                                                        Mengambil
+                                                                                        Peran</span>
+                                                                                    <p>{!! $role_request->alasan !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span class="label-peran">Rencana
+                                                                                        Acara</span>
+                                                                                    <p>{!! $role_request->rencana_acara !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                            </div>
+                                                                            <div class="col-md-12 "
+                                                                                style="margin-top: 20px;">
+                                                                                <div class="btn btn-sm "
+                                                                                    onclick="restoreOverlay()"
+                                                                                    style="border: 1px solid #064635; border radius:5px">
+                                                                                    <p
+                                                                                        style="color: #064635; margin-bottom:0; margin-top:-20px">
+                                                                                        Tutup</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            @if ($role_request->status_request == 'Diterima')
+                                                                <p class="tab-belum-konfirmasi">Pengajuan Anda Sudah
+                                                                    Diterima</p>
+                                                            @else
+                                                                <div class="col-md-12"
+                                                                    style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+                                                                    <div
+                                                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                                                        <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
+                                                                            style="width: 100px; height: 100px;"
+                                                                            class="mb-3">
+                                                                        <p>Opss!! Pengajuan Anda Sudah Ditolak</p>
+                                                                        <a href="{{ url('Ambil-Peran/create') }}"
+                                                                            class="btn btn-md button-transform button-border"
+                                                                            style="color: white; font-size:15px">Ajukan
+                                                                            Lagi?
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <div class="col-md-12"
+                                                        style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+                                                        <div
+                                                            style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                                            <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
+                                                                style="width: 100px; height: 100px;" class="mb-3">
+                                                            <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan
+                                                                peran.</p>
+                                                            <a href="{{ url('Ambil-Peran/create') }}"
+                                                                class="btn btn-md button-transform button-border"
+                                                                style="color: white; font-size:15px">Ajukan
+                                                                Sekarang</a>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="SudahKonfirmasi" class="tabcontent">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                @if (!is_null($list_role_request) && count($list_role_request) > 0)
+                                                    @foreach ($list_role_request as $role_request)
+                                                        @if ($role_request->status_request == 'Diterima' || $role_request->status_request == 'Ditolak')
+                                                            <div class="col-md-6 mb-2">
+                                                                <div class="wraps ">
+                                                                    <div class="overlays">
+                                                                        <div class="overlay-contents animate">
+                                                                            @php
+                                                                                $background_color = '';
+                                                                                $image_path = '';
+
+                                                                                switch ($role_request->status_request) {
+                                                                                    case 'Diterima':
+                                                                                        $background_color = '#06A44B';
+                                                                                        $image_path =
+                                                                                            url('/') .
+                                                                                            '/assets-web2/assets/images/peran/confirm.png';
+                                                                                        break;
+                                                                                    case 'Ditolak':
+                                                                                        $background_color = '#f5325c';
+                                                                                        $image_path =
+                                                                                            url('/') .
+                                                                                            '/assets-web2/assets/images/peran/sad.png';
+                                                                                        break;
+                                                                                }
+                                                                            @endphp
+
+                                                                            <div class="blue-rectangle animate slide"
+                                                                                style="background-color: {{ $background_color }};">
+                                                                                <p
+                                                                                    style="color: white; font-weight: bolder; margin-top: -5px;">
+                                                                                    {{ $role_request->status_request }}
+                                                                                </p>
+                                                                            </div>
+                                                                            @if ($role_request->status_request == 'Ditolak')
+                                                                                <p class="animate slide"
+                                                                                    style="text-align: center; color: #d6d6d6;  font-style: italic; font-size:12px; margin-top:-60px">
+                                                                                    Lihat alasan penolakan di detail
+                                                                                </p>
+                                                                                <p class="animate slide"
+                                                                                    style="text-align: center; color: #d6d6d6;  font-style: italic; font-size:12px; margin-top:-95px">
+                                                                                    pengajuan anda </p>
+                                                                            @endif
+                                                                            <p class="animate slide "
+                                                                                style="color: white; margin-bottom: -0.2rem;">
+                                                                                Diajukan Pada:
+                                                                                <br>
+                                                                                {{ \Carbon\Carbon::parse($role_request->created_at)->translatedFormat('d F Y') }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="image-contents animate slide ">
+                                                                            <img src="{{ $image_path }}"
+                                                                                alt="">
+                                                                        </div>
+                                                                        <div class="dots animate">
+                                                                            <div class="btn btn-sm button-transform animate slide-up mt-3 button-border"
+                                                                                onclick="toggleTransform(this)">
+                                                                                <span
+                                                                                    style="color: white; font-size:10px">Lihat
+                                                                                    Detail</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="text">
+                                                                        <p
+                                                                            style="text-align: center; justify-content:center; font-weight:bolder;">
+                                                                            <span> Data Pengajuan Pengambilan Peran
+                                                                                @if (
+                                                                                    $role_request->jumlah_edit < 1 &&
+                                                                                        $role_request->status_request != 'Ditolak' &&
+                                                                                        $role_request->status_request != 'Diterima')
+                                                                                    <a href="{{ url('Ambil-Peran', $role_request->id) }}/edit"
+                                                                                        class="btn btn-sm"
+                                                                                        style="display: inline-block">
+                                                                                        <i class="icofont-edit"></i>
+                                                                                        Edit
+                                                                                    </a>
+                                                                                @endif
+                                                                            </span>
+                                                                        </p>
+                                                                        <hr style="margin-top: -20px">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <span class="label-peran"
+                                                                                            class="label-peran">Nama
+                                                                                            Lengkap</span>
+                                                                                        <p>{{ $role_request->nama_lengkap }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span
+                                                                                            class="label-peran">Email</span>
+                                                                                        <p>{{ $role_request->email }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span class="label-peran">No.
+                                                                                            Telpon</span>
+                                                                                        <p>+62
+                                                                                            {{ $role_request->no_telpon }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span class="label-peran">Ambil
+                                                                                            Peran
+                                                                                            Sebagai</span>
+                                                                                        <p>{{ $role_request->request_role }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span class="label-peran">Alamat
+                                                                                        Lengkap</span>
+                                                                                    <p>{!! $role_request->alamat !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span
+                                                                                        class="label-peran">Pengalaman
+                                                                                        Terkait</span>
+                                                                                    <p>{!! $role_request->pengalaman !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span class="label-peran">Alasan
+                                                                                        Mengambil
+                                                                                        Peran</span>
+                                                                                    <p>{!! $role_request->alasan !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                <div class="col-md-12"
+                                                                                    style="text-align: center">
+                                                                                    <span class="label-peran">Rencana
+                                                                                        Acara</span>
+                                                                                    <p>{!! $role_request->rencana_acara !!}</p>
+                                                                                </div>
+                                                                                <hr style="margin-top: -15px">
+                                                                                @if ($role_request->status_request == 'Ditolak')
+                                                                                    <div class="col-md-12"
+                                                                                        style="text-align: center">
+                                                                                        <span
+                                                                                            class="label-peran">Alasan
+                                                                                            Penolakan</span>
+                                                                                        <p>{!! $role_request->alasan_penolakan !!}</p>
+                                                                                    </div>
+                                                                                @endif
+                                                                                <hr style="margin-top: -15px">
+                                                                            </div>
+                                                                            <div class="col-md-12 "
+                                                                                style="margin-top: 20px;">
+                                                                                <div class="btn btn-sm "
+                                                                                    onclick="restoreOverlay()"
+                                                                                    style="border: 1px solid #064635; border radius:5px">
+                                                                                    <p
+                                                                                        style="color: #064635; margin-bottom:0; margin-top:-20px">
+                                                                                        Tutup</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <p class="tab-sudah-konfirmasi">Pengajuan Anda Belum
+                                                                Dikonfirmasi
+                                                            </p>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <div class="col-md-12"
+                                                        style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+                                                        <div
+                                                            style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                                            <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
+                                                                style="width: 100px; height: 100px;" class="mb-3">
+                                                            <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan
+                                                                peran.</p>
+                                                            <a href="{{ url('Ambil-Peran/create') }}"
+                                                                class="btn btn-md button-transform button-border"
+                                                                style="color: white; font-size:15px">Ajukan
+                                                                Sekarang</a>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -919,6 +1282,23 @@
             }
         }
         changeTab('dashboard');
+
+
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById("defaultOpen").click();
+
 
         document.getElementById('upload-photo').addEventListener('change', function() {
             console.log('Change event triggered');

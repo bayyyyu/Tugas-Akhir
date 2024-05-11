@@ -21,6 +21,15 @@
     <link rel="stylesheet" href="{{ url('/') }}/assets-web2/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
+    <link href="{{ url('/') }}/assets-admin/dastone/plugins/datatables/dataTables.bootstrap5.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ url('/') }}/assets-admin/dastone/plugins/datatables/buttons.bootstrap5.min.css" rel="stylesheet"
+        type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="{{ url('/') }}/assets-admin/dastone/plugins/datatables/responsive.bootstrap4.min.css"
+        rel="stylesheet" type="text/css" />
+
+
     <!--Form Wizard-->
     <link rel="stylesheet" href="{{ url('/') }}/assets-admin/dastone/plugins/jquery-steps/jquery.steps.css">
 
@@ -59,9 +68,25 @@
     <script src="{{ url('/') }}/assets-web2/assets/js/lightcase.js"></script>
     <script src="{{ url('/') }}/assets-web2/assets/js/functions.js"></script>
 
-    
+
     <script src="{{ url('/') }}/assets-admin/dastone/plugins/jquery-steps/jquery.steps.min.js"></script>
     <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.form-wizard.init.js"></script>
+
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/dataTables.bootstrap5.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/buttons.bootstrap5.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/jszip.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/pdfmake.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/vfs_fonts.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/buttons.print.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.datatable.init.js"></script>
 
 </body>
 
