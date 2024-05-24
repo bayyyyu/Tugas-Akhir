@@ -5,7 +5,7 @@
                 <div class="banner-slider-part">
                     <img src="{{ url('/') }}/assets-web2/assets/images/banner/bg-images/1.png" alt="Your Image"
                         style="position: absolute; right: 0;top:20%; max-height: 400px; width:600px; object-fit:cover; display:flex" />
-                  
+                    <div class="overlay"></div>
                     <div class="container">
                         <div class="row flex-row-reverse justify-content-center align-items-center">
                             <div class="col-12">
@@ -32,6 +32,7 @@
                 <div class="banner-slider-part">
                     <img src="{{ url('/') }}/assets-web2/assets/images/banner/bg-images/2.png" alt="Your Image"
                         style="position: absolute; right: 0;top:20%; max-height: 400px; width:600px; object-fit:cover; display:flex" />
+                    <div class="overlay"></div>
                     <div class="container">
                         <div class="row flex-row-reverse justify-content-center align-items-center">
                             <div class="col-12">
@@ -54,6 +55,7 @@
                 <div class="banner-slider-part">
                     <img src="{{ url('/') }}/assets-web2/assets/images/banner/bg-images/3.png" alt="Your Image"
                         style="position: absolute; right: 0;margin-right:150px; top:0; margin-top:60px;height: 350px; width:auto; object-fit:cover; display:flex; border-radius: 0 0 20px 0;" />
+                    <div class="overlay"></div>
                     <div class="container">
                         <div class="row flex-row-reverse justify-content-center align-items-center">
                             <div class="col-12">

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 11 Bulan Mei 2024 pada 17.27
--- Versi server: 8.0.30
--- Versi PHP: 8.1.10
+-- Generation Time: May 24, 2024 at 07:11 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,11 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `event`
+-- Table structure for table `data_tambahan_event`
+--
+
+CREATE TABLE `data_tambahan_event` (
+  `id` int NOT NULL,
+  `event_id` int DEFAULT NULL,
+  `nama_berkas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `dokumen_tambahan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `data_tambahan_event`
+--
+
+INSERT INTO `data_tambahan_event` (`id`, `event_id`, `nama_berkas`, `dokumen_tambahan`, `created_at`, `updated_at`) VALUES
+(2, 33, 'Surat Izin dari Polres', 'folder_name/Nq60bqbR3spKD1DIsYLfpGWcr4S1WyY0OnUyzoWw.docx', '2024-05-12 09:14:26', '2024-05-12 09:14:26'),
+(3, 33, 'Surat Izin dari desa', 'folder_name/3wKprsSeEUjGBb9aJZHdGZl8CAOsYk2AYb7HqGSY.pdf', '2024-05-12 09:14:26', '2024-05-13 17:22:31'),
+(6, 36, 'Surat Izin dari RT', 'folder_name/pwRyuNlyxL9cGElSK9Xr81zdaMJtmOSnb9wkk4J8.pdf', '2024-05-14 08:26:34', '2024-05-14 08:26:34'),
+(7, 37, 'gambar', 'folder_name/koF28zdCKGqmfg51CHBSKnlNEdjPElISFDm1crjc.jpg', '2024-05-14 08:50:45', '2024-05-14 08:50:45');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event`
 --
 
 CREATE TABLE `event` (
   `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
   `nama_event` varchar(255) DEFAULT NULL,
   `tanggal_event` date DEFAULT NULL,
   `tanggal_selesai` date DEFAULT NULL,
@@ -39,29 +65,33 @@ CREATE TABLE `event` (
   `deskripsi` text,
   `lat` varchar(255) DEFAULT NULL,
   `lng` varchar(255) DEFAULT NULL,
+  `status` enum('Menunggu Konfirmasi','Diterima','Ditolak') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `alasan_penolakan` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `event`
+-- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`id`, `nama_event`, `tanggal_event`, `tanggal_selesai`, `jam`, `foto`, `foto_dokumentasi`, `deskripsi_foto_dokumentasi`, `deskripsi`, `lat`, `lng`, `created_at`, `updated_at`) VALUES
-(1, 'Hijaukan Pantai Bersamaa', '2023-06-10', NULL, '16:37:00', 'images/Event/1-1686475700-EepTA.jpg', 'images/Event/Foto Dokumentasi/1-1686474926-bcurS.jpg', '230043\n\nPohon hidup : 1,017   Pohon mati : 0   Rata-rata tinggi pohon : 80 cm   Diameter pohon : 1 cm   Perkembangan Pohon : 100%  \n\nDokumentasi Monitoring:', '<p><span style=\"font-family: &quot;Arial Black&quot;;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p><ol><li><span style=\"font-family: &quot;Arial Black&quot;;\">testetststettsts</span><span style=\"font-family: &quot;Arial Black&quot;;\">﻿</span></li><li><span style=\"font-family: &quot;Arial Black&quot;;\">gsdgsdgsvds</span></li><li><span style=\"font-family: &quot;Arial Black&quot;;\">fkdxncxnc</span></li><li><span style=\"font-family: &quot;Arial Black&quot;;\">kxncmxc</span></li></ol><p><span style=\"font-family: &quot;Arial Black&quot;;\">hahahahahha</span></p>', '-1.669685500986571', '110.0555217766025', '2023-06-20 03:34:08', '2023-06-19 20:34:08'),
-(4, 'Festival Mangrove Ramah Lingkungan', '2023-05-27', NULL, '07:20:00', 'images/Event/4-1686476737-ThTEl.jpg', 'images/Event/Foto Dokumentasi/4-1686474999-UP6LI.jpg', 'test lagi', '<div><font color=\"#000000\"><br></font></div><p><br></p>', '-1.8733437268630242', '109.96284853699393', '2023-06-20 18:13:06', '2023-06-20 11:13:06'),
-(6, 'Rangkaian Mangrove Cinta Laut', '2023-05-28', NULL, '23:48:00', 'images/Event/6-1686476801-31PO3.jpg', 'images/Event/Foto Dokumentasi/6-1686488157-Xwshw.mp4', 'test lagi', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '-1.6940509151424927', '110.02739146106185', '2023-06-11 13:14:34', '2023-06-11 13:14:34'),
-(9, 'Mangrove Care Day: Menjaga Ekosistem ', '2023-05-28', NULL, '23:48:00', 'images/Event/-1685292147-X5LP0.jpg', NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '-1.721437', '109.995025', '2023-06-26 13:22:28', '2023-06-26 13:22:28'),
-(10, 'Hari Mangrove Indonesia', '2023-05-10', NULL, '21:46:00', 'images/Event/-1685292147-X5LP0.jpg', NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '-1.3882613601346867', '110.16918340307306', '2023-06-11 08:38:29', '2023-06-11 08:38:29'),
-(11, 'Mangrove Sejuta Hidup', '2023-06-10', NULL, '23:38:00', 'images/Event/-1685464542-w3ksM.png', NULL, NULL, 'Mangrove Sejuta Hidup adalah sebuah acara yang diadakan dengan tujuan utama untuk meningkatkan kesadaran dan kepedulian masyarakat terhadap pentingnya penanaman mangrove sebagai upaya pelestarian ekosistem pesisir. Acara ini merupakan ajang kolaborasi antara komunitas, lembaga lingkungan, dan masyarakat setempat dalam upaya menjaga keberlanjutan dan kelestarian mangrove.\r\n\r\nDalam acara ini, peserta akan diajak untuk secara aktif terlibat dalam kegiatan penanaman mangrove di kawasan pesisir yang membutuhkan restorasi ekosistem. Para peserta akan mendapatkan penjelasan mengenai pentingnya mangrove sebagai benteng alam, penyangga kehidupan laut, dan penyerap karbon dioksida. Mereka juga akan diberikan pengetahuan dan panduan praktis mengenai teknik penanaman mangrove yang benar.\r\n\r\nSelain kegiatan penanaman mangrove, acara ini juga menyediakan berbagai kegiatan pendukung seperti pameran, seminar, dan lokakarya yang bertujuan untuk meningkatkan pemahaman peserta mengenai pentingnya keberadaan mangrove dan dampak positifnya terhadap lingkungan dan masyarakat sekitar.\r\n\r\nMelalui Mangrove Sejuta Hidup, kami berharap dapat menginspirasi dan mendorong partisipasi aktif masyarakat dalam pelestarian mangrove. Dengan bersama-sama menanam dan menjaga mangrove, kita dapat menciptakan lingkungan yang sehat, berkelanjutan, dan melindungi kehidupan pesisir yang beragam. Ayo bergabung dan menjadi bagian dari gerakan pelestarian mangrove untuk masa depan yang lebih baik!', '-1.7788126866674951', '110.47164873560266', '2023-06-09 18:34:01', '2023-06-09 18:34:01'),
-(25, 'Test sipaling kegiatan kali', '2024-06-04', NULL, '14:59:00', 'images/Event/-1707033617-pqkhw.jpg', NULL, NULL, '<p>wwww</p>', '-1.5873213274098943', '109.09127381159212', '2024-02-04 08:31:05', '2024-02-04 01:31:05'),
-(26, 'test', '2024-12-04', NULL, '07:00:00', 'images/Event/-1707034013-DEuBz.png', NULL, NULL, '<p>test saja!</p>', '-1.2432457811850994', '110.52829558866438', '2024-02-04 01:06:53', '2024-02-04 01:06:53'),
-(28, 'test berlangsung', '2024-02-04', '2024-02-06', '20:02:00', 'images/Event/-1707051757-1sSCW.jpg', NULL, NULL, '<p>test!!!!!</p>', '-1.9332268264771106', '110.06927558537707', '2024-02-04 06:02:38', '2024-02-04 06:02:38');
+INSERT INTO `event` (`id`, `user_id`, `nama_event`, `tanggal_event`, `tanggal_selesai`, `jam`, `foto`, `foto_dokumentasi`, `deskripsi_foto_dokumentasi`, `deskripsi`, `lat`, `lng`, `status`, `alasan_penolakan`, `created_at`, `updated_at`) VALUES
+(1, 41, 'Hijaukan Pantai Bersamaa', '2022-06-30', '2023-06-20', '16:37:00', 'images/Event/1-1686475700-EepTA.jpg', 'images/Event/Foto Dokumentasi/1-1686474926-bcurS.jpg', '230043\n\nPohon hidup : 1,017   Pohon mati : 0   Rata-rata tinggi pohon : 80 cm   Diameter pohon : 1 cm   Perkembangan Pohon : 100%  \n\nDokumentasi Monitoring:', '<p><span style=\"font-family: &quot;Arial Black&quot;;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p><ol><li><span style=\"font-family: &quot;Arial Black&quot;;\">testetststettsts</span><span style=\"font-family: &quot;Arial Black&quot;;\">﻿</span></li><li><span style=\"font-family: &quot;Arial Black&quot;;\">gsdgsdgsvds</span></li><li><span style=\"font-family: &quot;Arial Black&quot;;\">fkdxncxnc</span></li><li><span style=\"font-family: &quot;Arial Black&quot;;\">kxncmxc</span></li></ol><p><span style=\"font-family: &quot;Arial Black&quot;;\">hahahahahha</span></p>', '-1.669685500986571', '110.0555217766025', NULL, NULL, '2024-05-24 13:40:34', '2024-05-24 13:40:34'),
+(4, 41, 'Festival Mangrove Ramah Lingkungan', '2020-12-17', NULL, '07:20:00', 'images/Event/4-1686476737-ThTEl.jpg', 'images/Event/Foto Dokumentasi/4-1686474999-UP6LI.jpg', 'test lagi', '<div><font color=\"#000000\"><br></font></div><p><br></p>', '-1.8733437268630242', '109.96284853699393', NULL, NULL, '2024-05-24 13:40:58', '2024-05-24 13:40:58'),
+(6, 41, 'Rangkaian Mangrove Cinta Laut', '2023-05-28', NULL, '23:48:00', 'images/Event/6-1686476801-31PO3.jpg', 'images/Event/Foto Dokumentasi/6-1686488157-Xwshw.mp4', 'test lagi', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '-1.6940509151424927', '110.02739146106185', NULL, NULL, '2024-05-13 14:01:05', '2024-05-13 14:01:05'),
+(9, 41, 'Mangrove Care Day: Menjaga Ekosistem ', '2023-05-28', NULL, '23:48:00', 'images/Event/-1685292147-X5LP0.jpg', NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '-1.721437', '109.995025', NULL, NULL, '2024-05-14 16:31:47', '2024-05-14 16:31:47'),
+(10, 41, 'Hari Mangrove Indonesia', '2023-05-10', NULL, '21:46:00', 'images/Event/-1685292147-X5LP0.jpg', NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '-1.3882613601346867', '110.16918340307306', NULL, NULL, '2024-05-13 14:01:12', '2024-05-13 14:01:12'),
+(11, 41, 'Mangrove Sejuta Hidup', '2023-06-10', NULL, '23:38:00', 'images/Event/-1685464542-w3ksM.png', NULL, NULL, 'Mangrove Sejuta Hidup adalah sebuah acara yang diadakan dengan tujuan utama untuk meningkatkan kesadaran dan kepedulian masyarakat terhadap pentingnya penanaman mangrove sebagai upaya pelestarian ekosistem pesisir. Acara ini merupakan ajang kolaborasi antara komunitas, lembaga lingkungan, dan masyarakat setempat dalam upaya menjaga keberlanjutan dan kelestarian mangrove.\r\n\r\nDalam acara ini, peserta akan diajak untuk secara aktif terlibat dalam kegiatan penanaman mangrove di kawasan pesisir yang membutuhkan restorasi ekosistem. Para peserta akan mendapatkan penjelasan mengenai pentingnya mangrove sebagai benteng alam, penyangga kehidupan laut, dan penyerap karbon dioksida. Mereka juga akan diberikan pengetahuan dan panduan praktis mengenai teknik penanaman mangrove yang benar.\r\n\r\nSelain kegiatan penanaman mangrove, acara ini juga menyediakan berbagai kegiatan pendukung seperti pameran, seminar, dan lokakarya yang bertujuan untuk meningkatkan pemahaman peserta mengenai pentingnya keberadaan mangrove dan dampak positifnya terhadap lingkungan dan masyarakat sekitar.\r\n\r\nMelalui Mangrove Sejuta Hidup, kami berharap dapat menginspirasi dan mendorong partisipasi aktif masyarakat dalam pelestarian mangrove. Dengan bersama-sama menanam dan menjaga mangrove, kita dapat menciptakan lingkungan yang sehat, berkelanjutan, dan melindungi kehidupan pesisir yang beragam. Ayo bergabung dan menjadi bagian dari gerakan pelestarian mangrove untuk masa depan yang lebih baik!', '-1.7788126866674951', '110.47164873560266', NULL, NULL, '2024-05-13 14:01:15', '2024-05-13 14:01:15'),
+(25, 41, 'Test sipaling kegiatan kali', '2024-06-04', NULL, '14:59:00', 'images/Event/-1707033617-pqkhw.jpg', NULL, NULL, '<p>wwww</p>', '-1.5873213274098943', '109.09127381159212', NULL, NULL, '2024-05-13 14:01:17', '2024-05-13 14:01:17'),
+(28, 41, 'test berlangsung', '2024-02-04', '2024-02-06', '20:02:00', 'images/Event/-1707051757-1sSCW.jpg', NULL, NULL, '<p>test!!!!!</p>', '-1.9332268264771106', '110.06927558537707', NULL, NULL, '2024-05-13 14:01:19', '2024-05-13 14:01:19'),
+(33, 41, 'test pengajuan event', '2024-05-12', '2024-06-06', '23:16:00', 'images/Event/-1715530466-oDpuC.png', NULL, NULL, 'wwww', '-1.845383988573187', '110.14625928693108', 'Diterima', NULL, '2024-05-12 16:51:18', '2024-05-12 16:51:18'),
+(36, 41, 'testesttestest', '2024-05-14', '2024-05-14', '22:29:00', 'images/Event/-1715700394-shxCO.jpg', NULL, NULL, 'testetstetstets', '-2.3312046801806106', '110.42359492612565', 'Menunggu Konfirmasi', NULL, '2024-05-14 08:26:34', '2024-05-14 08:26:34'),
+(37, 41, 'test tambahan image', '2024-05-14', '2024-05-27', '22:50:00', 'images/Event/-1715701845-pug8q.jpg', NULL, NULL, 'halo', '-1.8591097232781846', '110.58606612845509', 'Diterima', NULL, '2024-05-15 05:24:42', '2024-05-14 22:24:42');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `katalog_pohon`
+-- Table structure for table `katalog_pohon`
 --
 
 CREATE TABLE `katalog_pohon` (
@@ -75,7 +105,7 @@ CREATE TABLE `katalog_pohon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `katalog_pohon`
+-- Dumping data for table `katalog_pohon`
 --
 
 INSERT INTO `katalog_pohon` (`id`, `nama_pohon`, `nama_lain_pohon`, `deskripsi`, `foto`, `created_at`, `updated_at`) VALUES
@@ -90,7 +120,7 @@ INSERT INTO `katalog_pohon` (`id`, `nama_pohon`, `nama_lain_pohon`, `deskripsi`,
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -100,7 +130,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -112,7 +142,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `notifikasi`
+-- Table structure for table `notifikasi`
 --
 
 CREATE TABLE `notifikasi` (
@@ -125,7 +155,7 @@ CREATE TABLE `notifikasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `notifikasi`
+-- Dumping data for table `notifikasi`
 --
 
 INSERT INTO `notifikasi` (`id`, `user_id`, `judul`, `isi`, `created_at`, `updated_at`) VALUES
@@ -136,7 +166,7 @@ INSERT INTO `notifikasi` (`id`, `user_id`, `judul`, `isi`, `created_at`, `update
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `role_request`
+-- Table structure for table `role_request`
 --
 
 CREATE TABLE `role_request` (
@@ -159,17 +189,17 @@ CREATE TABLE `role_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `role_request`
+-- Dumping data for table `role_request`
 --
 
 INSERT INTO `role_request` (`id`, `id_user`, `notifikasi_id`, `request_role`, `nama_lengkap`, `email`, `no_telpon`, `alamat`, `pengalaman`, `alasan`, `rencana_acara`, `status_request`, `alasan_penolakan`, `jumlah_edit`, `created_at`, `updated_at`) VALUES
 (9, 43, 9, 'penyelenggara', 'Guntur Pamungkas', 'guntur123@gmail.com', 81234567890, 'Jl. Letjend S. Parman Kelurahan No.67, Sukaharja, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan Barat 78811', '-', '-', '-', 'Ditolak', 'blablablabla', 0, '2024-04-27 08:02:48', '2024-05-11 13:39:47'),
-(11, 41, 11, 'penyelenggara', 'Anwar Zaim jr', 'zaim@gmail.com', 81234567890, '-', '-', '-', '-', 'Diterima', 'blablabnlabalala', 1, '2024-05-01 21:43:04', '2024-05-05 15:04:49');
+(11, 41, 11, 'penyelenggara', 'Anwar Zaim jr', 'zaim@gmail.com', 81234567890, '-', '-', '-', '-', 'Diterima', 'blablabnlabalala', 1, '2024-05-01 21:43:04', '2024-05-12 07:46:57');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tanaman`
+-- Table structure for table `tanaman`
 --
 
 CREATE TABLE `tanaman` (
@@ -193,11 +223,11 @@ CREATE TABLE `tanaman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `tanaman`
+-- Dumping data for table `tanaman`
 --
 
 INSERT INTO `tanaman` (`id`, `user_id`, `event_id`, `lokasi`, `sample`, `tanggal_penanaman`, `jenis_mangrove`, `jenis_tanah`, `masa_tumbuh`, `umur_tanaman`, `deskripsi`, `status_penanaman`, `foto`, `lat`, `lng`, `created_at`, `updated_at`) VALUES
-(38, 36, 11, 'Pantai air mata permai', 'rt4543', '2022-12-05', 'api api', 'tanah suci', '2 bulan', '12 hari', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'hidup', 'images/Tanaman/38-1685017794-DeCJa.jpg', '-1.8645999873202934', '110.0555233330781', '2023-05-24 23:35:07', '2023-07-16 19:29:56'),
+(38, 36, 11, 'Pantai air mata permai', 'rt4543', '2022-12-05', 'api api', 'tanah suci', '2 bulan', '12 hari', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'mati', 'images/Tanaman/38-1685017794-DeCJa.jpg', '-1.8645999873202934', '110.0555233330781', '2023-05-24 23:35:07', '2024-05-22 00:34:41'),
 (40, 36, 11, 'dimana ya', 'rt4543', '2023-05-25', 'jenis jenisan', 'rererer', '2 bulan', '40 hari', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'hidup', 'images/Tanaman/40-1685121934-QWwoI.jpg', '-1.5763391859789206', '110.22302474454989', '2023-05-25 08:05:49', '2023-06-10 06:25:56'),
 (41, 36, 1, 'dimana aja', '13445', '2023-05-27', 'jenis jenisan', 'rererer', '2 bulan', '12', 'sdsd', 'hidup', 'images/Tanaman/-1685180066-YY4EG.png', '-1.7657726629466286', '110.12966243454645', '2023-05-27 02:34:26', '2023-06-10 05:11:41'),
 (48, 36, 1, 'pantai', '16YQq', '2023-07-01', 'Bakau (Rhizophora sp)', 'ph 0-7', '2 bulan', '40 hari', 'test test test', 'mati', 'images/Tanaman/-1688151796-mE51o.png', '-2.1857489471296665', '110.09396508072162', '2023-06-30 12:03:16', '2023-07-16 21:01:19'),
@@ -207,7 +237,7 @@ INSERT INTO `tanaman` (`id`, `user_id`, `event_id`, `lokasi`, `sample`, `tanggal
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -227,104 +257,116 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `role`, `nama_lengkap`, `username`, `email`, `password`, `jenis_kelamin`, `foto_profil`, `bio`, `tgl_lahir`, `remember_token`, `created_at`, `updated_at`) VALUES
 (27, 'admin', 'Admin', 'admin', 'admin@gmail.com', '$2y$10$/GsgC.VGUJ2Llo3dNOlsp.XWmoGgq7m7KERX4sF/ngWOE32MVocDi', 'Laki-laki', 'images/User/27-1685021268-o67CV.jpg', NULL, NULL, NULL, '2023-05-04 20:32:12', '2024-05-11 12:56:34'),
-(36, 'admin', 'Bayu Pratama', 'bayu', 'bayu@gmail.com', '$2y$10$uX1tniAjAgyehjYzOUOB4ustAarEHtTIFZ6/tzzPrOQWC6VyqBoBi', 'Laki-laki', 'images/User/36-1707053268-EvWsT.jpg', ' Saya selalu melihat sisi positif dalam setiap situasi dan percaya bahwa setiap tantangan adalah peluang untuk tumbuh dan berkembang.', NULL, 'Tc4Tx3CvjfYdfKXPRBSVOyviHBalAmEQe4hbT7Q6sm2yDqfKG6vc6PTe3QcO', '2023-05-25 06:20:30', '2024-05-11 12:56:38'),
-(41, 'penyelenggara', 'Anwar Zaim1', 'zaim', 'zaim@gmail.com', '$2y$10$YsmFDWHIoaPCtdLK/VoYjuG3L4WgBonaPGn8cOoEW5i1kCblnXubm', 'Laki-laki', 'images/User/41-1708970821-ZqyBz.jpg', NULL, '2014-02-06', 'gKgHLej5EPN8DKUXPhBp38RCiQAE1fAUrilvamk9MXTjBKV0THyZqUAfhJeh', '2024-02-02 12:11:21', '2024-05-11 12:58:48'),
-(43, 'pengguna', 'Guntur Pamungkas', 'guntur', 'guntur123@gmail.com', '$2y$10$jE8xi1w7keGY.u.r3ycPue3YP3YtDUZ58pIP3YM3Xm0U646ruPCVW', 'Laki-laki', 'images/User/43-1714207436-gNiNC.jpg', NULL, NULL, NULL, '2024-02-11 09:20:59', '2024-05-11 12:56:42'),
-(46, 'pengguna', 'user', 'usertyz', 'user@gmail.com', '$2y$10$BdFtK6hItADRMDBfmWB4dea8Jk3tT0GH5MvgvIveDgLN4AfPXnEjK', 'Perempuan', NULL, NULL, NULL, NULL, '2024-05-05 04:52:44', '2024-05-11 12:56:46');
+(36, 'admin', 'Bayu Pratama', 'bayu', 'bayu@gmail.com', '$2y$10$uX1tniAjAgyehjYzOUOB4ustAarEHtTIFZ6/tzzPrOQWC6VyqBoBi', 'Laki-laki', 'images/User/36-1707053268-EvWsT.jpg', ' Saya selalu melihat sisi positif dalam setiap situasi dan percaya bahwa setiap tantangan adalah peluang untuk tumbuh dan berkembang.', NULL, 'Inle91rFx52Gs1e4iGxY0mpFUMBD4cJ3yh3NKIMbqPuJcew74dSe5cByj3I8', '2023-05-25 06:20:30', '2024-05-22 07:44:15'),
+(41, 'penyelenggara', 'Anwar Zaim1', 'zaim', 'zaim@gmail.com', '$2y$10$YsmFDWHIoaPCtdLK/VoYjuG3L4WgBonaPGn8cOoEW5i1kCblnXubm', 'Laki-laki', 'images/User/41-1708970821-ZqyBz.jpg', NULL, '2014-02-06', '9qGT94fBO8XyHJliJijkFCPermEuM0MBZ4QLWZliEsHlom4B5XrHYY4SRGG8', '2024-02-02 12:11:21', '2024-05-22 07:33:23'),
+(43, 'pengguna', 'Guntur Pamungkas', 'guntur', 'guntur123@gmail.com', '$2y$10$jE8xi1w7keGY.u.r3ycPue3YP3YtDUZ58pIP3YM3Xm0U646ruPCVW', 'Laki-laki', 'images/User/43-1714207436-gNiNC.jpg', NULL, NULL, 'ggjaNLboWsGjEio0Gr18X9KUxqJKt4Fpjx5t3tuKasYjcMoJfVtUmNWcO6jg', '2024-02-11 09:20:59', '2024-05-22 07:30:52'),
+(46, 'pengguna', 'user', 'usertyz', 'user@gmail.com', '$2y$10$BdFtK6hItADRMDBfmWB4dea8Jk3tT0GH5MvgvIveDgLN4AfPXnEjK', 'Perempuan', NULL, NULL, NULL, NULL, '2024-05-05 04:52:44', '2024-05-12 07:24:02');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `event`
+-- Indexes for table `data_tambahan_event`
+--
+ALTER TABLE `data_tambahan_event`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `katalog_pohon`
+-- Indexes for table `katalog_pohon`
 --
 ALTER TABLE `katalog_pohon`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `migrations`
+-- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `notifikasi`
+-- Indexes for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `role_request`
+-- Indexes for table `role_request`
 --
 ALTER TABLE `role_request`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tanaman`
+-- Indexes for table `tanaman`
 --
 ALTER TABLE `tanaman`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `event`
+-- AUTO_INCREMENT for table `data_tambahan_event`
+--
+ALTER TABLE `data_tambahan_event`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT untuk tabel `katalog_pohon`
+-- AUTO_INCREMENT for table `katalog_pohon`
 --
 ALTER TABLE `katalog_pohon`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT untuk tabel `migrations`
+-- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `notifikasi`
+-- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `role_request`
+-- AUTO_INCREMENT for table `role_request`
 --
 ALTER TABLE `role_request`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `tanaman`
+-- AUTO_INCREMENT for table `tanaman`
 --
 ALTER TABLE `tanaman`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;

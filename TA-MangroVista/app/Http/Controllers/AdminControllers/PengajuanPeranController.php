@@ -9,14 +9,6 @@ use Illuminate\Http\Request;
 
 class PengajuanPeranController extends Controller
 {
-    // function index(Request $request)
-    // {
-    //     $page_baru = $request->query('page_baru', 1);
-    //     $list_baru = RoleRequest::where('status_request', 'Menunggu Konfirmasi')->get();
-
-    //     $data['list_role_request'] = RoleRequest::all();
-    //     return view('Admin.Pengajuan-Peran.index', compact('page_baru'),  $data);
-    // }
     public function index(Request $request)
     {
         $page_baru = $request->query('page_baru', 1);

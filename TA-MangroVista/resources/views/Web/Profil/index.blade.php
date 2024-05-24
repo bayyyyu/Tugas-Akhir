@@ -490,7 +490,7 @@
         }
 
         @media only screen and (max-width: 600px) {
-            #London p.tab-belum-konfirmasi {
+            #BelumKonfirmasi p.tab-belum-konfirmasi {
                 margin-left: 20%;
             }
         }
@@ -504,7 +504,7 @@
         }
 
         @media only screen and (max-width: 600px) {
-            #London p.tab-sudah-konfirmasi {
+            #SudahKonfirmasi p.tab-sudah-konfirmasi {
                 margin-left: 20%;
             }
         }
@@ -544,6 +544,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="tab-content faq-content" id="tab-content">
+
+                            <!-- Konten untuk tab Ringkasan akun -->
                             <div class="tab-pane fade show tab-content-item mt-1" id="dashboard-content">
                                 <h6>Ringkasan Akun</h6>
                                 <p style="font-size:15px">Ringkasan peran, partisipasi event & pengajuan event</p>
@@ -605,7 +607,7 @@
                                                     <div class="st-content mt-2">
                                                         <a href="#">
                                                             <h6 style="font-size: 15px">Pengajuan Event: </h6>
-                                                            <h6>2</h6>
+                                                            <h6>{{ $total_pengajuan_event }}</h6>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -614,13 +616,123 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Tambahkan konten untuk tab lainnya di sini -->
+
+                            <!-- Konten untuk tab Partisipasi -->
                             <div class="tab-content-item" id="Partisipasi-content" style="display:none;">
                                 <!-- Konten untuk tab Partisipasi -->
                             </div>
 
+                            <!-- Konten untuk tab pengajuan event -->
                             <div class="tab-content-item" id="pengajuan-content" style="display:none;">
+                                @if ($user->role == 'pengguna')
+                                    <div class="col-md-12"
+                                        style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+                                        <div
+                                            style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                            <img src="{{ url('/') }}/assets-web2/assets/images/icon/empty.png"
+                                                style="width: 100px; height: 100px;" class="mb-3">
+                                            <p>Kamu tidak memiliki akses untuk mengajukan event, silahkan ajukan
+                                                pengambilan peran terlebih dahulu</p>
+                                            <a href="{{ url('Ambil-Peran/create') }}"
+                                                class="btn btn-md button-transform button-border"
+                                                style="color: white; font-size:15px">Ajukan Sekarang</a>
+                                        </div>
+                                    </div>
+                                @elseif ($user->role == 'penyelenggara' && $user->events->isEmpty())
+                                    <div class="col-md-12"
+                                        style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+                                        <div
+                                            style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                            <img src="{{ url('/') }}/assets-web2/assets/images/icon/empty.png"
+                                                style="width: 100px; height: 100px;" class="mb-3">
+                                            <p>Kamu belum mengajukan event</p>
+                                            <a href="{{ url('Pengajuan-Event/create') }}"
+                                                class="btn btn-md button-transform button-border"
+                                                style="color: white; font-size:15px">Ajukan Sekarang</a>
+                                        </div>
+                                    </div>
+                                @elseif ($user->role == 'penyelenggara' && !$user->events->isEmpty())
                                 <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <div class="float-right mb-2">
+                                            <a href="{{ url('Pengajuan-Event/create') }}" class="btn btn-sm btn-outline-success">
+                                                <i class="fa fa-plus" class="align-self-center icon-xs"></i>
+                                                Tambah Event
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <table id="datatable"
+                                                        class="table table-bordered dt-responsive nowrap"
+                                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                        <thead>
+                                                            <th width="5px">No</th>
+                                                            <th width="100px">Aksi</th>
+                                                            <th>Nama Event</th>
+                                                            <th>Status</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($list_event as $event)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>
+                                                                        <div class="btn-group">
+                                                                            <a href="{{ url('Admin/Katalog-Pohon', $event->id) }}"
+                                                                                class="btn btn-dark btn-sm"><i
+                                                                                    class="fa fa-info"></i></a>
+                                                                            <a href="{{ url('Admin/Katalog-Pohon', $event->id) }}/edit"
+                                                                                class="btn btn-warning btn-sm"><i
+                                                                                    class="fa fa-edit"></i></a>
+                                                                            <x-button.delete
+                                                                                id="{{ $event->id }}" />
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ $event->nama_event }}
+                                                                    </td>
+                                                                    <td>
+                                                                        @php
+                                                                            $status = $event->status;
+                                                                            $background_color = '';
+
+                                                                            switch ($status) {
+                                                                                case 'Menunggu Konfirmasi':
+                                                                                    $background_color = '#4E9ED4';
+                                                                                    break;
+                                                                                case 'Diterima':
+                                                                                    $background_color = '#06A44B';
+                                                                                    break;
+                                                                                case 'Ditolak':
+                                                                                    $background_color = '#f5325c';
+                                                                                    break;
+                                                                                default:
+                                                                                    $background_color = 'transparent';
+                                                                                    break;
+                                                                            }
+                                                                        @endphp
+
+                                                                        <div
+                                                                            style="background-color: {{ $background_color }}; padding: 5px; border-radius: 5px;">
+                                                                            <span
+                                                                                style="color: white;">{{ $status }}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- <div class="row">
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-body">
@@ -643,7 +755,7 @@
                                                                     <a href="{{ url('Admin/Katalog-Pohon') }}/edit"
                                                                         class="btn btn-warning btn-sm"><i
                                                                             class="fa fa-edit"></i></a>
-                                                                    {{-- <x-button.delete id="{{ $katalog_pohon->id }}" /> --}}
+                                                                  
                                                                 </div>
                                                             </td>
                                                             <td></td>
@@ -654,38 +766,11 @@
                                             </div>
                                         </div>
                                     </div> <!-- end col -->
-                                </div>
+                                </div> --}}
                             </div>
-
 
                             <!-- Konten untuk tab Peran -->
                             <div class="tab-content-item" id="peran-content" style="display:none;">
-                                {{-- <section class="shop-single">
-                                    <div class="container">
-                                        <div class="row justify-content-center mb-15">
-                                            <div class="col-lg-12 sticky-widget">
-                                                <div class="review">
-                                                    <ul class="agri-ul review-nav">
-                                                        <li class="desc active" data-target="description-show">
-                                                            Belum Konfirmasi
-                                                        </li>
-                                                        <li class="rev " data-target="review-content-show">
-                                                            Sudah Konfrimasi
-                                                        </li>
-                                                    </ul>
-                                                    <div class="review-content review-content-show">
-                                                        <div class="review-showing">
-
-                                                        </div>
-                                                        <div class="description">
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section> --}}
                                 <div class="tab">
                                     <button class="tablinks" onclick="openCity(event, 'BelumKonfirmasi')"
                                         id="defaultOpen">Belum
@@ -866,7 +951,7 @@
                                                         style="display: flex; justify-content: center; align-items: center; height: 60vh;">
                                                         <div
                                                             style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                                            <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
+                                                            <img src="{{ url('/') }}/assets-web2/assets/images/icon/empty.png"
                                                                 style="width: 100px; height: 100px;" class="mb-3">
                                                             <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan
                                                                 peran.</p>
@@ -1065,7 +1150,7 @@
                                                         style="display: flex; justify-content: center; align-items: center; height: 60vh;">
                                                         <div
                                                             style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                                            <img src="{{ url('/') }}/assets-web2/assets/images/peran/sad.png"
+                                                            <img src="{{ url('/') }}/assets-web2/assets/images/icon/empty.png"
                                                                 style="width: 100px; height: 100px;" class="mb-3">
                                                             <p>Opss!! Nampaknya kamu belum ada mengajukan pengambilan
                                                                 peran.</p>

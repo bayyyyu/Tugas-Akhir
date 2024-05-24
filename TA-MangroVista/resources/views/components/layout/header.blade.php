@@ -10,7 +10,7 @@
                     <span class="badge bg-danger rounded-pill noti-icon-badge">{{ $list_notifikasi->count() }}</span>
 
                 </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-lg pt-0">
+                {{-- <div class="dropdown-menu dropdown-menu-end dropdown-lg pt-0">
                     <h6
                         class="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
                         Notifications <span class="badge bg-primary rounded-pill">{{ $list_notifikasi->count() }}</span>
@@ -44,7 +44,7 @@
                     <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
                         View all <i class="fi-arrow-right"></i>
                     </a>
-                </div>
+                </div> --}}
             </li>
 
             <li class="dropdown">

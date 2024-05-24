@@ -28,6 +28,14 @@
                                                 @endif
                                             </div>
                                             <div class="col-md-6 col-sm-3">
+                                                <strong style="font-weight: bolder" >Lokasi</strong>
+                                                @if ($tanaman->user->nama_lengkap)
+                                                    <p style="font-size:15px">{{ $tanaman->user->nama_lengkap }}</p>
+                                                @else
+                                                    <p style="font-size:15px">-</p>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-6 col-sm-3">
                                                 <strong style="font-weight: bolder">Sample</strong>
                                                 @if ($tanaman->sample)
                                                     <p style="font-size:15px">{{ $tanaman->sample }}</p>

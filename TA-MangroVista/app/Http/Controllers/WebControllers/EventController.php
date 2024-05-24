@@ -16,7 +16,8 @@ class EventController extends Controller
         $tanaman = Tanaman::with('eventPenanaman')->get();
 
         $page_telah_selesai = $request->query('page_telah_selesai', 1);
-        $list_event_telah_selesai = Event::where('tanggal_event', '<', now())->paginate(6, ['*'], 'page_telah_selesai')->withQueryString();
+        $list_event_telah_selesai = Event::where('tanggal_event', '<', now())->get();
+        // $list_event_telah_selesai = Event::where('tanggal_event', '<', now())->paginate(6, ['*'], 'page_telah_selesai')->withQueryString();
 
         $page_belum_selesai = $request->query('page_belum_selesai', 1);
         $list_event_belum_selesai = Event::where('tanggal_event', '>', now())->get();

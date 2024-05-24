@@ -36,38 +36,49 @@
 
                             <div id="telahSelesai" class="tabcontent" style="display: none;">
                                 <div class="shop-title d-flex flex-wrap justify-content-between ">
+                                    @php
+                                        $countDiterimaEvents = $list_event_telah_selesai
+                                            ->where('status', 'Diterima')
+                                            ->count();
+                                    @endphp
                                     <p>
-                                        Daftar Event
+                                        @if ($countDiterimaEvents > 0)
+                                            Daftar Event Telah Selesai
+                                        @else
+                                            Tidak ada event 
+                                        @endif
                                     </p>
                                     <div class="product-view-mode">
                                         <a class="active" data-target="grids"><i class="icofont-ghost"></i></a>
                                     </div>
                                 </div>
                                 <div class="shop-product-wrap grids row ">
-                                    @foreach ($list_event_telah_selesai->where('tanggal_event', '<', now()) as $event)
-                                        <div class="col-lg-4 col-md-6 col-12 mb-3">
-                                            <div class="campaign-card">
-                                                <img src="{{ asset($event->foto) }}"
-                                                    style="height:170px; object-fit:cover">
-                                                <div class="campaign-content">
-                                                    <a href="{{ url('Event', $event->id) }}">
-                                                        <h3>{{ $event->nama_event }}</h3>
-                                                    </a>
-                                                    <p>{!! substr(nl2br($event->deskripsi), 0, 100) !!}..... </p>
-                                                    {{-- <a href="{{ url('Event', $event->id) }}"
+                                    @foreach ($list_event_telah_selesai->where('tanggal_selesai', '<', now()) as $event)
+                                        @if ($event->status == 'Diterima')
+                                            <div class="col-lg-4 col-md-6 col-12 mb-3">
+                                                <div class="campaign-card">
+                                                    <img src="{{ asset($event->foto) }}"
+                                                        style="height:170px; object-fit:cover">
+                                                    <div class="campaign-content">
+                                                        <a href="{{ url('Event', $event->id) }}">
+                                                            <h3>{{ $event->nama_event }}</h3>
+                                                        </a>
+                                                        <p>{!! substr(nl2br($event->deskripsi), 0, 100) !!}..... </p>
+                                                        {{-- <a href="{{ url('Event', $event->id) }}"
                                                         class="btn btn-sm">Selengkapnya</a>
                                                     <p class="float-right mt-2" style="color:black; font-size:15px">Telah Berakhir</p> --}}
-                                                </div>
-                                                <div class="action-buttons">
-                                                    <a href="{{ url('Event', $event->id) }}"
-                                                        class="btn btn-sm">Selengkapnya</a>
-                                                    <p class="status">Telah Berakhir</p>
+                                                    </div>
+                                                    <div class="action-buttons">
+                                                        <a href="{{ url('Event', $event->id) }}"
+                                                            class="btn btn-sm">Selengkapnya</a>
+                                                        <p class="status">Telah Berakhir</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 </div>
-                                <div class="d-flex flex-wrap justify-content-center mt-2">
+                                {{-- <div class="d-flex flex-wrap justify-content-center mt-2">
                                     {{ $list_event_telah_selesai->onEachSide(1)->links() }}
                                 </div>
                                 <div class="container">
@@ -82,18 +93,19 @@
                                             Item
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <br>
                             </div>
                             <div id="belumSelesai" class="tabcontent" style="display: none;">
                                 <div class="shop-title d-flex flex-wrap justify-content-between ">
                                     @php
-                                        $belumSelesaiEvents = $list_event_belum_selesai->where('tanggal_event', '>', now());
-                                        $countBelumSelesaiEvents = count($belumSelesaiEvents);
+                                        $countDiterimaEvents = $list_event_belum_selesai
+                                            ->where('status', 'Diterima')
+                                            ->count();
                                     @endphp
                                     <p>
-                                        @if ($countBelumSelesaiEvents > 0)
-                                            Daftar Event
+                                        @if ($countDiterimaEvents > 0)
+                                            Daftar Event Belum Selesai
                                         @else
                                             Tidak ada event
                                         @endif
@@ -104,37 +116,40 @@
                                 </div>
                                 <div class="shop-product-wrap grids row ">
                                     @foreach ($list_event_belum_selesai->where('tanggal_event', '>', now()) as $event)
-                                        <div class="col-lg-4 col-md-6 col-12 mt-3 mb-3">
-                                            <div class="campaign-card">
-                                                <img src="{{ asset($event->foto) }}"
-                                                    style="height:170px; object-fit:cover">
-                                                <div class="campaign-content">
-                                                    <h3>{{ $event->nama_event }}</h3>
-                                                    <p>{!! substr(nl2br($event->deskripsi), 0, 100) !!}..... </p>
-                                                </div>
-                                                @php
-                                                    $tanggalEvent = new DateTime($event->tanggal_event);
-                                                    $sekarang = new DateTime();
-                                                    $selisih = $sekarang->diff($tanggalEvent);
-                                                    $hari = $selisih->days;
-                                                @endphp
-                                                <div class="action-buttons">
-                                                    <a href="{{ url('Event', $event->id) }}"
-                                                        class="btn btn-sm">Selengkapnya</a>
-                                                    @if ($hari > 0)
-                                                        <p class="float-right status"
-                                                            style="color:black; font-size:15px"> <i
-                                                                class="icofont-ui-calendar"> {{ $hari }} hari
-                                                                lagi</i></p>
-                                                    @else
-                                                        <p class="float-right status"
-                                                            style="color:black; font-size:15px">
-                                                            <i class="icofont-ui-calendar"> Besok</i>
-                                                        </p>
-                                                    @endif
+                                        @if ($event->status == 'Diterima')
+                                            <div class="col-lg-4 col-md-6 col-12 mt-3 mb-3">
+                                                <div class="campaign-card">
+                                                    <img src="{{ asset($event->foto) }}"
+                                                        style="height:170px; object-fit:cover">
+                                                    <div class="campaign-content">
+                                                        <h3>{{ $event->nama_event }}</h3>
+                                                        <p>{!! substr(nl2br($event->deskripsi), 0, 100) !!}..... </p>
+                                                    </div>
+                                                    @php
+                                                        $tanggalEvent = new DateTime($event->tanggal_event);
+                                                        $sekarang = new DateTime();
+                                                        $selisih = $sekarang->diff($tanggalEvent);
+                                                        $hari = $selisih->days;
+                                                    @endphp
+                                                    <div class="action-buttons">
+                                                        <a href="{{ url('Event', $event->id) }}"
+                                                            class="btn btn-sm">Selengkapnya</a>
+                                                        @if ($hari > 0)
+                                                            <p class="float-right status"
+                                                                style="color:black; font-size:15px"> <i
+                                                                    class="icofont-ui-calendar"> {{ $hari }}
+                                                                    hari
+                                                                    lagi</i></p>
+                                                        @else
+                                                            <p class="float-right status"
+                                                                style="color:black; font-size:15px">
+                                                                <i class="icofont-ui-calendar"> Besok</i>
+                                                            </p>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 </div>
                                 {{-- <div class="d-flex flex-wrap justify-content-center mt-2">
@@ -156,16 +171,17 @@
                                 <br>     --}}
                             </div>
                             <div id="berlangsung" class="tabcontent" style="display: none;">
-                                <div class="shop-title d-flex flex-wrap justify-content-between">
+                                <div class="shop-title d-flex flex-wrap justify-content-between ">
                                     @php
-                                        $berlangsungEvents = $list_event_berlangsung;
-                                        $countBerlangsungEvents = count($berlangsungEvents);
+                                        $countDiterimaEvents = $list_event_berlangsung
+                                            ->where('status', 'Diterima')
+                                            ->count();
                                     @endphp
                                     <p>
-                                        @if ($countBerlangsungEvents > 0)
+                                        @if ($countDiterimaEvents > 0)
                                             Daftar Event Berlangsung
                                         @else
-                                            Tidak ada event berlangsung
+                                            Tidak ada event
                                         @endif
                                     </p>
                                     <div class="product-view-mode">
@@ -174,24 +190,26 @@
                                 </div>
                                 <div class="shop-product-wrap grids row">
                                     @foreach ($list_event_berlangsung as $event)
-                                        <!-- Tampilkan data event yang sedang berlangsung -->
-                                        <div class="col-lg-4 col-md-6 col-12 mt-3 mb-3">
-                                            <div class="campaign-card">
-                                                <img src="{{ asset($event->foto) }}"
-                                                    style="height:170px; object-fit:cover">
-                                                <div class="campaign-content">
-                                                    <a href="{{ url('Event', $event->id) }}">
-                                                        <h3>{{ $event->nama_event }}</h3>
-                                                    </a>
-                                                    <p>{!! substr(nl2br($event->deskripsi), 0, 100) !!}..... </p>
-                                                </div>
-                                                <div class="action-buttons">
-                                                    <a href="{{ url('Event', $event->id) }}"
-                                                        class="btn btn-sm">Selengkapnya</a>
-                                                    <p class="status">Sedang Berlangsung</p>
+                                        @if ($event->status == 'Diterima')
+                                            <!-- Tampilkan data event yang sedang berlangsung -->
+                                            <div class="col-lg-4 col-md-6 col-12 mt-3 mb-3">
+                                                <div class="campaign-card">
+                                                    <img src="{{ asset($event->foto) }}"
+                                                        style="height:170px; object-fit:cover">
+                                                    <div class="campaign-content">
+                                                        <a href="{{ url('Event', $event->id) }}">
+                                                            <h3>{{ $event->nama_event }}</h3>
+                                                        </a>
+                                                        <p>{!! substr(nl2br($event->deskripsi), 0, 100) !!}..... </p>
+                                                    </div>
+                                                    <div class="action-buttons">
+                                                        <a href="{{ url('Event', $event->id) }}"
+                                                            class="btn btn-sm">Selengkapnya</a>
+                                                        <p class="status">Sedang Berlangsung</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>

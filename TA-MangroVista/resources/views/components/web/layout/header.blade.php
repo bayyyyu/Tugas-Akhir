@@ -64,7 +64,7 @@
                            <a href="{{url('Tanam')}}">Penanaman</a>
                         </li> --}}
                         <li>
-                            <a href="{{ url('GIS') }}">Peta Interaktif</a>
+                            <a href="{{ url('GIS') }}">Peta </a>
                         </li>
                         <li><a href="{{ url('Kontak') }}">Contact</a></li>
                     </ul>
@@ -200,7 +200,7 @@
                                     </li> --}}
                                     <li class="{{ request()->is('GIS') ? 'active2' : '' }}">
                                         <a href="{{ url('GIS') }}" style="color: #064635; font-size:13px">Peta
-                                            Interaktif</a>
+                                            </a>
                                     </li>
 
                                 </ul>

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminKatalogPohonController extends Controller
 {
-    function index(Request $request)
+    function index()
     {
         $data['list_katalog_pohon'] = KatalogPohon::all();
         return view('Admin.Katalog-Pohon.index', $data);

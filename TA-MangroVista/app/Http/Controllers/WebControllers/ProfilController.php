@@ -23,8 +23,10 @@ class ProfilController extends Controller
         $data['list_role_request'] = $user->role_request;
         $tanaman = Tanaman::with('eventPenanaman')->get();
         $data['list_tanaman'] = Tanaman::all();
-        $data['list_event'] = Event::all();
+        $data['list_event'] = Event::where('user_id', $user->id)->get();
         $data['user'] = Auth::user();
+        $totalPengajuanEvent = Event::where('user_id', $user->id)->count();
+        $data['total_pengajuan_event'] = $totalPengajuanEvent;
         return view('Web.Profil.index', $data);
     }
     function updatePengaturanAkun(User $user)

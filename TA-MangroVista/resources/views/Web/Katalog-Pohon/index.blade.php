@@ -1,5 +1,4 @@
 <x-web.app-webNoSlider>
-
     <div class="shop-page mt-5 mb-5">
         <div class="container">
             <div class="judul-atas" style="margin-top:80px">

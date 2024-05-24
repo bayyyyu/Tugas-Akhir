@@ -69,6 +69,9 @@
 
     <link href="{{ url('/') }}/assets-admin/dastone/plugins/lightpick/lightpick.css" rel="stylesheet" />
 
+    <link href="{{ url('/') }}/assets-admin/dastone/plugins/lightbox/magnific-popup.css" rel="stylesheet"
+        type="text/css" />
+
     @stack('style')
 </head>
 
@@ -80,7 +83,7 @@
 
     <div class="page-wrapper">
         <!-- Top Bar Start -->
-        <x-layout.header  />
+        <x-layout.header />
         <!-- Top Bar End -->
 
         <!-- Page Content-->
@@ -148,6 +151,8 @@
     <script src="{{ url('/') }}/assets-admin/dastone/plugins/lightpick/lightpick.js"></script>
     <script src='{{ url('/') }}/assets-admin/assets/pages/jquery.calendar.js'></script>
 
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/lightbox/jquery.magnific-popup.js"></script>
+    <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.lightbox.init.js"></script>
     @stack('script')
 </body>
 

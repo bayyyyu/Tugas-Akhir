@@ -12,6 +12,8 @@
         rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('/') }}/assets-web2/assets/images/x-icon/6.png">
 
+
+
     <link rel="stylesheet" href="{{ url('/') }}/assets-web2/assets/css/animate.css">
     <link rel="stylesheet" href="{{ url('/') }}/assets-web2/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url('/') }}/assets-web2/assets/css/all.min.css">
@@ -29,9 +31,19 @@
     <link href="{{ url('/') }}/assets-admin/dastone/plugins/datatables/responsive.bootstrap4.min.css"
         rel="stylesheet" type="text/css" />
 
-
     <!--Form Wizard-->
     <link rel="stylesheet" href="{{ url('/') }}/assets-admin/dastone/plugins/jquery-steps/jquery.steps.css">
+
+    <link href="{{ url('/') }}/assets-admin/dastone/plugins/dropify/css/dropify.min.css" rel="stylesheet">
+
+    {{-- <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="wizard.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="wizard.js"></script> --}}
 
 
 </head>
@@ -88,6 +100,16 @@
     <script src="{{ url('/') }}/assets-admin/dastone/plugins/datatables/responsive.bootstrap4.min.js"></script>
     <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.datatable.init.js"></script>
 
+    {{-- <script src="{{ url('/') }}/assets-admin/dastone/plugins/tinymce/tinymce.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.form-editor.init.js"></script> --}}
+
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/dropify/js/dropify.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.form-upload.init.js"></script>
+
+    <script src="{{ url('/') }}/assets-admin/dastone/plugins/repeater/jquery.repeater.min.js"></script>
+    <script src="{{ url('/') }}/assets-admin/assets/pages/jquery.form-repeater.js"></script>
+
+    @stack('script')
 </body>
 
 </html>

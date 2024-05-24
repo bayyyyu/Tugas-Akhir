@@ -12,6 +12,7 @@ class AdminEventController extends Controller
 {
     function index(Request $request)
     {
+
         $data['list_event'] = Event::all();
         $data['jumlah_penanaman'] = [];
         $data['jumlah_pohon_hidup'] = [];
@@ -36,31 +37,31 @@ class AdminEventController extends Controller
 
         $page_berlangsung = $request->query('page_berlangsung', 1);
         $list_event_berlangsung = Event::where('tanggal_event', '<=', now())
-        ->where('tanggal_selesai', '>=', now())
-        ->get();
+            ->where('tanggal_selesai', '>=', now())
+            ->get();
 
-        return view('Admin.Event.index', compact('list_event_telah_selesai', 'list_event_belum_selesai', 'list_event_berlangsung', 'page_telah_selesai','page_belum_selesai', 'page_berlangsung'),$data);
+        return view('Admin.Event.index', compact('list_event_telah_selesai', 'list_event_belum_selesai', 'list_event_berlangsung', 'page_telah_selesai', 'page_belum_selesai', 'page_berlangsung'), $data);
     }
-    function create()
-    {
-        return view('Admin.Event.create');
-    }
-    public function store(Request $request)
-    {
-        $event = new Event;
-        $event->nama_event = $request->input('nama_event');
-        $event->tanggal_event = $request->input('tanggal_event');
-        $event->tanggal_selesai = $request->input('tanggal_selesai');
-        $event->deskripsi = $request->input('deskripsi');
-        $event->lat = $request->input('lat');
-        $event->lng = $request->input('lng');
-        $event->jam = $request->input('jam');
+    // function create()
+    // {
+    //     return view('Admin.Event.create');
+    // }
+    // public function store(Request $request)
+    // {
+    //     $event = new Event;
+    //     $event->nama_event = $request->input('nama_event');
+    //     $event->tanggal_event = $request->input('tanggal_event');
+    //     $event->tanggal_selesai = $request->input('tanggal_selesai');
+    //     $event->deskripsi = $request->input('deskripsi');
+    //     $event->lat = $request->input('lat');
+    //     $event->lng = $request->input('lng');
+    //     $event->jam = $request->input('jam');
 
-        $event->handleUploadFoto();
-        $event->save();
+    //     $event->handleUploadFoto();
+    //     $event->save();
 
-        return redirect('Admin/Event')->with('success', 'Event Penanaman berhasil ditambahkan.');
-    }
+    //     return redirect('Admin/Event')->with('success', 'Event Penanaman berhasil ditambahkan.');
+    // }
     public function show(Event $event)
     {
         $data['event'] = $event;
@@ -72,20 +73,22 @@ class AdminEventController extends Controller
         $data['jumlah_pohon_hidup'][$event->id] = $jumlah_pohon_hidup;
 
         $jumlahPenanaman = DB::table('tanaman')
-        ->where('event_id', $event->id)
+            ->where('event_id', $event->id)
             ->count();
         $data['jumlah_penanaman'] = $jumlahPenanaman;
-        
+
+
         return view('Admin.Event.show', $data);
     }
 
     function edit(Event $event)
     {
         $data['event'] = $event;
-        return view('Admin.Event.edit',$data);
+        return view('Admin.Event.edit', $data);
     }
 
-    function dokumentasi(Event $event){
+    function dokumentasi(Event $event)
+    {
         $data['event'] = $event;
         return view('Admin.Event.dokumentasi', $data);
     }
@@ -107,5 +110,30 @@ class AdminEventController extends Controller
     {
         $event->delete();
         return redirect('Admin/Event')->with('danger', 'Data Berhasil Dihapus');
+    }
+    public function reject(Request $request, Event $event)
+    {
+
+        $request->validate([
+            'alasan_penolakan' => 'required|string',
+        ]);
+
+        $event->status = 'Ditolak';
+        if (request('alasan_penolakan')) $event->alasan_penolakan = (request('alasan_penolakan'));
+        $event->save();
+        return $this->redirectToPengajuanEvent();
+    }
+    public function konfirm(Event $event)
+    {
+
+        $event->status = 'Diterima';
+        $event->save();
+
+        return $this->redirectToPengajuanEvent();
+    }
+    protected function
+    redirectToPengajuanEvent()
+    {
+        return redirect('Admin/Event')->with('success', 'Operasi berhasil dilakukan.');
     }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\WebControllers\InformasiController;
 use App\Http\Controllers\WebControllers\KatalogPohonController;
 use App\Http\Controllers\WebControllers\PenanamanController;
 use App\Http\Controllers\WebControllers\ProfilController;
+use App\Http\Controllers\PenyelenggaraControllers\PengajuanEventController;
 use App\Http\Controllers\WebControllers\RoleRequestController;
 use App\Http\Controllers\WebControllers\TanamController;
 use App\Models\Dokumentasi;
@@ -78,8 +79,8 @@ Route::get('Admin/Event/{event}/edit', [AdminEventController::class, 'edit'])->m
 Route::get('Admin/Event/{event}/dokumentasi', [AdminEventController::class, 'dokumentasi'])->middleware('isError');
 Route::put('Admin/Event/{event}', [AdminEventController::class, 'update'])->middleware('isError');
 Route::delete('Admin/Event/{event}', [AdminEventController::class, 'destroy'])->middleware('isError');
-// Route::get('Admin/Dokumentasi/{eventId}/create', [DokumentasiController::class, 'create'])->middleware('isError');
-// Route::post('Admin/Dokumentasi', [DokumentasiController::class, 'store'])->middleware('isError');
+Route::put('Admin/Event/{event}/reject', [AdminEventController::class, 'reject'])->middleware('isError');
+Route::put('Admin/Event/{event}/confirm', [AdminEventController::class, 'konfirm'])->middleware('isError');
 
 
 // User
@@ -128,6 +129,7 @@ Route::get('Penanaman/{tanaman}', [TanamController::class, 'show']);
 //Web/GIS
 Route::get('GIS', [GisController::class, 'index']);
 
+
 //Web/Profil
 Route::get('Profil', [ProfilController::class, 'index']);
 Route::put('Profil/{user}', [ProfilController::class, 'updatePengaturanAkun']);
@@ -140,6 +142,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('Ambil-Peran/{role_request}', [RoleRequestController::class, 'update']);
 });
 
-// Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+//Penyelenggara
+Route::get('Pengajuan-Event/create', [PengajuanEventController::class, 'create']);
+Route::post('Pengajuan-Event', [PengajuanEventController::class, 'store']);
 
 

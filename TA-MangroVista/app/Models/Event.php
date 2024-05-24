@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tanaman;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 
 class Event extends Model
 {
     protected $table = 'event';
-    protected $fillable = ['id', 'nama_event', 'tanggal_event', 'deskripsi','foto','jam','lat','lng'];
+    protected $fillable = ['id','user_id', 'nama_event', 'tanggal_event', 'deskripsi','foto','jam','lat','lng'];
 
     public function forms()
     {
@@ -75,6 +76,16 @@ class Event extends Model
     {
         return $this->hasMany(Dokumentasi::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function data_tambahan_event()
+    {
+        return $this->hasMany(DataTambahanEvent::class);
+    }
+
+
 }
 
 

@@ -61,4 +61,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(RoleRequest::class, 'id_user');
     }
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
